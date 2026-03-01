@@ -55,26 +55,26 @@ function HabitDetailPage() {
 ### Search Params (URL State)
 
 ```typescript
-import { createFileRoute } from "@tanstack/react-router";
-import { z } from "zod";
+import { createFileRoute } from '@tanstack/react-router'
+import { z } from 'zod'
 
 const searchSchema = z.object({
-  view: z.enum(["grid", "table"]).default("grid"),
-  range: z.enum(["week", "month", "year"]).default("month"),
-});
+  view: z.enum(['grid', 'table']).default('grid'),
+  range: z.enum(['week', 'month', 'year']).default('month'),
+})
 
-export const Route = createFileRoute("/habits")({
+export const Route = createFileRoute('/habits')({
   validateSearch: searchSchema,
   component: HabitsPage,
-});
+})
 
 function HabitsPage() {
-  const { view, range } = Route.useSearch();
-  const navigate = Route.useNavigate();
+  const { view, range } = Route.useSearch()
+  const navigate = Route.useNavigate()
 
-  const switchView = (newView: "grid" | "table") => {
-    navigate({ search: (prev) => ({ ...prev, view: newView }) });
-  };
+  const switchView = (newView: 'grid' | 'table') => {
+    navigate({ search: (prev) => ({ ...prev, view: newView }) })
+  }
 }
 ```
 
@@ -96,14 +96,14 @@ navigate({ to: "/habits/$habitId", params: { habitId: "123" } });
 ### TanStack Start (Server Functions)
 
 ```typescript
-import { createServerFn } from "@tanstack/react-start/server";
+import { createServerFn } from '@tanstack/react-start/server'
 
-const getUser = createServerFn({ method: "GET" })
+const getUser = createServerFn({ method: 'GET' })
   .validator(z.object({ userId: z.string() }))
   .handler(async ({ data }) => {
     // This runs on the server
-    return await fetchUser(data.userId);
-  });
+    return await fetchUser(data.userId)
+  })
 ```
 
 ### Key Anti-Patterns

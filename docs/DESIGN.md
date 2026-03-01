@@ -15,10 +15,12 @@ This document defines the visual language and implementation specifications for 
 ## Typography
 
 ### Fonts
+
 - Data and Numbers: JetBrains Mono
 - Labels and Headings: Inter
 
 ### Type Scale
+
 - xs: 0.75rem (12px)
 - sm: 0.875rem (14px)
 - base: 1rem (16px)
@@ -27,18 +29,21 @@ This document defines the visual language and implementation specifications for 
 - 2xl: 1.5rem (24px)
 
 ### Weights and Usage
+
 - Regular (400): Body text, secondary labels.
 - Medium (500): Primary UI labels, button text.
 - Semi-bold (600): Section headings.
 - Bold (700): Page titles, emphasized stats.
 
 ### Line Heights
+
 - Data/Tables: 1.1 (Tight)
 - Labels/Forms: 1.5 (Standard)
 
 ## Color System (Dark Theme)
 
 ### Base Colors
+
 - Background: #0a0a0a
 - Background Elevated (Modals, Sidebar): #121212
 - Background Subtle (Hover, Active): #1a1a1a
@@ -49,6 +54,7 @@ This document defines the visual language and implementation specifications for 
 - Selection/Focus: #3b82f6
 
 ### Habit Color Palette
+
 Curated for heatmap visibility and contrast.
 
 - Red: #ef4444
@@ -65,12 +71,14 @@ Curated for heatmap visibility and contrast.
 - Rose: #f43f5e
 
 ### Semantic Colors
+
 - Success: #22c55e
 - Warning: #f59e0b
 - Error: #ef4444
 - Info: #3b82f6
 
 ### Grid Intensity Mapping
+
 Intensity is determined by completion percentage.
 
 - 0%: Background (#1a1a1a)
@@ -82,6 +90,7 @@ Intensity is determined by completion percentage.
 The combined summary grid uses #ededed as the base color with the same opacity steps.
 
 ## Spacing System
+
 Based on Tailwind units (1 unit = 4px).
 
 - 0: 0px
@@ -99,16 +108,19 @@ Based on Tailwind units (1 unit = 4px).
 ## Grid and Heatmap Specifications
 
 ### Cell Dimensions
+
 - Table View Day Cell: 32px x 32px
 - Grids View Day Cell: 12px x 12px
 
 ### Rendering Rules
+
 - No gaps between cells in the same row/column.
 - No border radius.
 - No borders on cells.
 - Partial completion in table view: Fill cell from bottom to top based on percentage.
 
 ### Layout
+
 - Columns: 7 days, ordered based on user's week start setting (Sunday or Monday).
 - Rows: N (number of weeks).
 - Labels: Month labels placed above the grid, aligned to the start of the first week of that month. Day headers (M, T, W, T, F, S, S) placed above columns.
@@ -116,6 +128,7 @@ Based on Tailwind units (1 unit = 4px).
 ## Component Specifications
 
 ### Table View Row
+
 - Height: 40px.
 - Padding: Left/Right 12px.
 - Layout: [Drag Handle] [Icon] [Name] [Spacer] [N Day Cells (configurable, default 7)] [Stats].
@@ -124,28 +137,33 @@ Based on Tailwind units (1 unit = 4px).
 - Stats: Displayed as compact numbers (e.g., 5/7) at the end of the row.
 
 ### Grids View Card
+
 - Padding: 16px.
 - Layout: [Name + Stats Header] [Gap 8px] [Heatmap Grid].
 - Spacing: 16px between cards.
 - Combined Grid: Always appears at the top, uses #ededed scale.
 
 ### Habit Form
+
 - Inputs: No border. Background #1a1a1a. 1px #262626 bottom underline for text fields.
 - Color Picker: 4x3 grid of 24px squares.
 - Type Toggle: Segmented control with sharp corners.
 - Buttons: Sharp corners, solid background for primary, ghost for secondary.
 
 ### Navigation
+
 - Bottom Tab Bar: 56px height. 24px icons with 10px labels.
 - Sidebar: 240px width (collapsed to 64px). Active item marked by #3b82f6 background tint (#3b82f6 at 10% opacity) and #1a1a1a background.
 
 ### Buttons
+
 - Primary: Background #ededed, Text #0a0a0a.
 - Secondary: Background #1a1a1a, Text #ededed.
 - Destructive: Background #ef4444, Text #ededed.
 - Sizes: sm (24px height), md (32px height), lg (40px height).
 
 ### Modal
+
 - Backdrop: #000000 at 70% opacity.
 - Width: Max 480px.
 - Layout: Header with title, Body for form, Footer for actions. No close button; use Escape or click outside.

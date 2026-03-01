@@ -6,20 +6,20 @@
 
 ## Tech Stack
 
-| Layer       | Technology                              |
-| ----------- | --------------------------------------- |
-| Framework   | TanStack Start (React meta-framework)  |
-| Router      | TanStack Router (file-based routing)   |
-| Database    | Convex (real-time backend)             |
-| Auth        | Convex Auth with Google OAuth          |
-| Styling     | Tailwind CSS v4                        |
-| Language    | TypeScript (strict mode)               |
-| Linting     | oxlint                                 |
-| Formatting  | Biome                                  |
-| Testing     | Vitest + React Testing Library         |
-| E2E Testing | Playwright                             |
-| Deployment  | Vercel + GitHub Actions                |
-| Package Mgr | pnpm                                   |
+| Layer       | Technology                            |
+| ----------- | ------------------------------------- |
+| Framework   | TanStack Start (React meta-framework) |
+| Router      | TanStack Router (file-based routing)  |
+| Database    | Convex (real-time backend)            |
+| Auth        | Convex Auth with Google OAuth         |
+| Styling     | Tailwind CSS v4                       |
+| Language    | TypeScript (strict mode)              |
+| Linting     | oxlint                                |
+| Formatting  | oxfmt                                 |
+| Testing     | Vitest + React Testing Library        |
+| E2E Testing | Playwright                            |
+| Deployment  | Vercel + GitHub Actions               |
+| Package Mgr | pnpm                                  |
 
 ## Project Structure
 

@@ -22,6 +22,7 @@ test: add integration tests for table view
 ```
 
 Rules:
+
 - Lowercase, imperative mood, no period at end
 - Subject line under 72 characters
 - Add body (blank line after subject) for non-obvious changes
@@ -45,6 +46,7 @@ gh pr merge --squash --delete-branch
 ## Pre-commit Hooks (Lefthook)
 
 The project uses Lefthook. On commit, staged files are automatically:
+
 - Linted with `oxlint`
 - Formatted with `biome`
 

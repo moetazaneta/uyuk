@@ -3,6 +3,7 @@
 This document outlines the technical architecture for uyuk, a habit tracking web application built with modern reactive technologies.
 
 ## Tech Stack
+
 - Framework: TanStack Start (React, File-based routing, SSR)
 - Database/Backend: Convex (Reactive, real-time, serverless)
 - Auth: Convex Auth with Google OAuth
@@ -108,9 +109,11 @@ Navigation is handled via file-based routing. Authenticated routes are grouped t
 ## State Management
 
 ### Server State (Reactive)
+
 Convex serves as the primary state manager. Queries are reactive, meaning the UI automatically updates when data changes in the cloud. We use `useQuery` for data fetching and `useMutation` for updates.
 
 ### Client State
+
 - UI State: Managed via standard React `useState` or `useReducer` for complex interactions like drag-and-drop.
 - Form State: `react-hook-form` for habit creation and settings.
 - URL State: TanStack Router search params handle view filters (e.g., `?start=2024-01-01`) and modal visibility.
@@ -118,12 +121,14 @@ Convex serves as the primary state manager. Queries are reactive, meaning the UI
 ## Convex Functions
 
 ### Queries
+
 - `habits:list`: Returns active habits for the user, ordered by `sortOrder`.
 - `habits:getById`: Specific habit details.
 - `completions:byDateRange`: Fetches all logs between two dates to populate views.
 - `stats:getSummary`: Computes streaks and completion rates.
 
 ### Mutations
+
 - `habits:create`: Adds new habit with calculated `sortOrder`.
 - `habits:reorder`: Batch updates `sortOrder` for a set of habits.
 - `completions:upsert`: Handles the "increment" logic for boolean habits or "set" for numeric ones.
@@ -132,6 +137,7 @@ Convex serves as the primary state manager. Queries are reactive, meaning the UI
 ## Architecture Decisions
 
 ### 1. Data Flow
+
 ```mermaid
 graph TD
     UI[React Components] -->|Mutation| CX[Convex Backend]
@@ -141,12 +147,15 @@ graph TD
 ```
 
 ### 2. Habit Log Design
+
 We store one record per habit per day. For boolean habits, the `value` increments. This allows users to track habits they perform multiple times a day (e.g., "Drink 8 glasses of water").
 
 ### 3. Streak Calculation
+
 Streaks are computed at query-time within Convex functions. This ensures they are always accurate relative to the user's current timezone without requiring complex "streak maintenance" mutations on every log.
 
 ### 4. Drag and Drop
+
 Reordering uses a simple `number` based `sortOrder`. When a habit is moved, we calculate a new index. For high-performance UI, we apply optimistic updates using Convex's internal state before the server confirms.
 
 ## Deployment Architecture
@@ -156,6 +165,7 @@ Reordering uses a simple `number` based `sortOrder`. When a habit is moved, we c
 - CI/CD: GitHub integration with Vercel. Preview branches create unique Convex environments for testing.
 
 Required Environment Variables:
+
 - `CONVEX_DEPLOYMENT`: Convex deployment identifier (set by Convex CLI).
 - `VITE_CONVEX_URL`: Public Convex URL for the client.
 - `AUTH_GOOGLE_ID`: Google OAuth client ID (set in Convex dashboard).
