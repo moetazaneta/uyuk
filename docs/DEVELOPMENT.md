@@ -157,6 +157,53 @@ pre-commit:
       run: pnpm exec biome format --write {staged_files}
 ```
 
+## Git Workflow
+
+### Branching
+
+- `main` is the production branch. Never push directly to it.
+- Create feature branches from `main`:
+  ```bash
+  git checkout -b feat/habit-creation
+  ```
+- Branch naming: `feat/`, `fix/`, `chore/`, `docs/` prefixes.
+
+### Commit Messages
+
+Follow [Conventional Commits](https://www.conventionalcommits.org/):
+
+```
+feat: add habit creation form
+fix: correct streak calculation for timezone edge case
+chore: configure biome formatter
+docs: add git workflow guide
+refactor: extract color picker into standalone component
+test: add integration tests for table view
+```
+
+Rules:
+- Lowercase, no period at the end.
+- Use imperative mood ("add" not "added").
+- Keep the subject line under 72 characters.
+- Add a body for non-obvious changes (blank line after subject):
+  ```
+  fix: prevent double-tap registering two completions
+
+  The tap handler was not debounced, causing rapid taps to fire
+  multiple mutations. Added a 200ms debounce to the cell onClick.
+  ```
+
+### Pull Requests
+
+1. Push your branch:
+   ```bash
+   git push -u origin feat/habit-creation
+   ```
+2. Open a PR against `main` on GitHub.
+3. PR title follows the same conventional commit format.
+4. CI must pass (lint, typecheck, test, build) before merging.
+5. Squash merge into `main` to keep history clean.
+
 ## Code Conventions
 
 ### File Naming

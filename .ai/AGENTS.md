@@ -164,3 +164,9 @@ Full project documentation is in `/docs/`. Read these before implementing:
 4. **TESTING.md** — How to test
 5. **DEVELOPMENT.md** — How to set up and develop
 6. **TASKS.md** — What's done and what's next
+
+## Git Workflow
+
+All git operations (commits, branches, PRs) are handled by a dedicated git agent.
+Load the `git-master` skill and the project git rules at `.ai/rules/git.md` when delegating.
+See `docs/DEVELOPMENT.md` §Git Workflow for the full human-readable guide.
