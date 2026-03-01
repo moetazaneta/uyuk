@@ -6,6 +6,7 @@ This document covers the setup, tooling, and conventions for the uyuk repository
 
 - Node.js 20+
 - pnpm 9+
+- [GitHub CLI (`gh`)](https://cli.github.com/) — for PRs and repo operations
 - TanStack Start (Frontend + API)
 - Convex (Backend)
 - Tailwind CSS v4
@@ -195,14 +196,23 @@ Rules:
 
 ### Pull Requests
 
-1. Push your branch:
-   ```bash
-   git push -u origin feat/habit-creation
-   ```
-2. Open a PR against `main` on GitHub.
-3. PR title follows the same conventional commit format.
-4. CI must pass (lint, typecheck, test, build) before merging.
-5. Squash merge into `main` to keep history clean.
+Use the [GitHub CLI (`gh`)](https://cli.github.com/) for creating and merging PRs:
+
+```bash
+# Push your branch
+git push -u origin feat/habit-creation
+
+# Create a PR
+gh pr create --title "feat: add habit creation form" --body "Summary of changes"
+
+# Squash merge when CI passes
+gh pr merge --squash --delete-branch
+```
+
+Rules:
+- PR title follows conventional commit format.
+- CI must pass (lint, typecheck, test, build) before merging.
+- Squash merge into `main` to keep history clean.
 
 ## Code Conventions
 
