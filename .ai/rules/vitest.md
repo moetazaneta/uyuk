@@ -1,0 +1,58 @@
+# Vitest Testing Guidelines
+
+> Source: Community (cursorrulespacks/cursorrules-collection)
+> Status: OPTIONAL — disable if not needed
+> Applies to: `*.test.ts`, `*.spec.ts`, `vitest.config.ts`
+
+## Test Structure
+
+- Colocate test files with source: `utils.ts` → `utils.test.ts` (same directory)
+- Use `describe` blocks to group related tests by function or behavior
+- Test names describe expected behavior: `it('returns empty array when no items match filter')`
+- Follow AAA pattern: Arrange, Act, Assert — separated by blank lines
+- One assertion per test when possible, multiple only for closely related checks
+
+## Assertions
+
+- `expect().toBe()` for primitives, `expect().toEqual()` for objects/arrays
+- `expect().toStrictEqual()` when you care about undefined properties and class instances
+- `expect().toMatchObject()` for partial object matching
+- `expect().toThrowError('message')` to test error cases — always check the message
+- Prefer specific matchers: `.toContain()`, `.toHaveLength()`, `.toHaveProperty()` over generic `.toBe(true)`
+
+## Mocking
+
+- Use `vi.mock('module')` at the top of the file for module mocks
+- Use `vi.fn()` for function mocks, `vi.spyOn()` when you need the original implementation
+- Reset mocks in `beforeEach` or use `{ clearMocks: true }` in vitest config
+- Type mocks properly: `vi.mocked(myFunction)` to get typed mock instance
+- Mock at the boundary (API calls, file system), not internal functions
+
+## Async Testing
+
+- Use `async/await` in test functions — no done callbacks
+- Use `vi.useFakeTimers()` and `vi.advanceTimersByTime()` for timer-dependent code
+- Call `vi.useRealTimers()` in `afterEach` when using fake timers
+- Use `vi.waitFor()` for testing async state changes
+
+## Coverage
+
+- Configure coverage in `vitest.config.ts`: `coverage: { provider: 'v8', reporter: ['text', 'html'] }`
+- Set coverage thresholds: statements 80, branches 80, functions 80
+- Exclude test files, configs, and type files from coverage
+- Focus coverage on business logic, not framework glue code
+
+## Snapshot Testing
+
+- Use `toMatchInlineSnapshot()` over `toMatchSnapshot()` — review changes in-place
+- Snapshot simple serializable output only — not DOM trees or large objects
+- Update snapshots intentionally with `--update`, never blindly
+
+## Anti-Patterns — Do NOT
+
+- Testing implementation details — test behavior and outputs
+- Using `test.only` in committed code — CI should run all tests
+- Mocking everything — if you mock the thing you're testing, the test is useless
+- Writing tests that pass when the code is broken (testing the mock, not the code)
+- Using `setTimeout` in tests — use fake timers or `vi.waitFor()`
+- Sharing mutable state between tests without resetting in `beforeEach`
