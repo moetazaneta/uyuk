@@ -17,7 +17,7 @@ Static analysis provides the fastest feedback loop.
 
 - **Tools**: TypeScript (Strict Mode), oxlint.
 - **Scope**: All source files.
-- **Pattern**: 
+- **Pattern**:
   - TypeScript ensures data structures for habits and completions are consistent across the app.
   - oxlint enforces code quality and catches common pitfalls like unused variables or improper dependency imports.
 
@@ -34,20 +34,21 @@ Unit tests focus on complex logic that doesn't depend on the UI or external serv
   - Data transformation (converting raw Convex completion records into grid-ready arrays).
 
 ### Example Pattern
+
 ```typescript
-import { describe, it, expect } from 'vitest';
-import { calculateStreak } from './habit-utils';
+import { describe, it, expect } from 'vitest'
+import { calculateStreak } from './habit-utils'
 
 describe('calculateStreak', () => {
   it('returns 0 for no completions', () => {
-    expect(calculateStreak([])).toBe(0);
-  });
+    expect(calculateStreak([])).toBe(0)
+  })
 
   it('correctly increments for consecutive days', () => {
-    const completions = ['2026-02-28', '2026-03-01'];
-    expect(calculateStreak(completions)).toBe(2);
-  });
-});
+    const completions = ['2026-02-28', '2026-03-01']
+    expect(calculateStreak(completions)).toBe(2)
+  })
+})
 ```
 
 ## 3. Integration Tests (The Largest Layer)
@@ -59,25 +60,27 @@ Integration tests provide the most value by simulating how users actually intera
 - **Key Principle**: Use accessible queries (`screen.getByRole`, `screen.getByLabelText`) to ensure the app remains usable and accessible.
 
 ### What to test
+
 - **Habit Management**: Filling out the creation form and seeing the new habit appear in the list.
 - **Completion Logging**: Tapping a cell, seeing the value update, and verifying the visual change in the grid.
 - **View Transitions**: Switching between Table and Grid views preserves the correct data.
 - **Settings Impact**: Changing the "Week Start Day" in settings immediately updates the layout of all habit grids.
 
 ### Example Pattern
+
 ```tsx
-import { render, screen, fireEvent } from '@testing-library/react';
-import { HabitList } from './HabitList';
+import { render, screen, fireEvent } from '@testing-library/react'
+import { HabitList } from './HabitList'
 
 it('allows a user to log a completion by clicking a cell', async () => {
-  render(<HabitList />);
-  
-  const cell = screen.getByRole('button', { name: /march 1/i });
-  fireEvent.click(cell);
-  
+  render(<HabitList />)
+
+  const cell = screen.getByRole('button', { name: /march 1/i })
+  fireEvent.click(cell)
+
   // Verify visual state change
-  expect(cell).toHaveAttribute('data-completed', 'true');
-});
+  expect(cell).toHaveAttribute('data-completed', 'true')
+})
 ```
 
 ## 4. End-to-End (E2E) Tests
@@ -92,17 +95,20 @@ E2E tests cover the "Happy Path" across the entire stack, including the real bac
   - Cross-device persistence: Completing a habit on a mobile viewport and seeing it reflected after refreshing on a desktop viewport.
 
 ### Example Pattern
-```typescript
-import { test, expect } from '@playwright/test';
 
-test('user can create a habit and see it in the table view', async ({ page }) => {
-  await page.goto('/table');
-  await page.getByRole('button', { name: /new habit/i }).click();
-  await page.getByLabel(/habit name/i).fill('Drink Water');
-  await page.getByRole('button', { name: /save/i }).click();
-  
-  await expect(page.getByText('Drink Water')).toBeVisible();
-});
+```typescript
+import { test, expect } from '@playwright/test'
+
+test('user can create a habit and see it in the table view', async ({
+  page,
+}) => {
+  await page.goto('/table')
+  await page.getByRole('button', { name: /new habit/i }).click()
+  await page.getByLabel(/habit name/i).fill('Drink Water')
+  await page.getByRole('button', { name: /save/i }).click()
+
+  await expect(page.getByText('Drink Water')).toBeVisible()
+})
 ```
 
 ## Convex Backend Testing
@@ -114,16 +120,18 @@ Testing backend functions ensures the data integrity and security of the applica
 - **Data Isolation**: Ensure that queries for User A never return data belonging to User B.
 
 ### Example Pattern
-```typescript
-import { v } from "convex/values";
-import { api } from "./_generated/api";
-import { t } from "./_generated/test_utils";
 
-test("mutation: createHabit requires authentication", async () => {
-  const convex = t.base();
-  await expect(convex.mutation(api.habits.create, { name: "Water" }))
-    .rejects.toThrow("Unauthenticated");
-});
+```typescript
+import { v } from 'convex/values'
+import { api } from './_generated/api'
+import { t } from './_generated/test_utils'
+
+test('mutation: createHabit requires authentication', async () => {
+  const convex = t.base()
+  await expect(
+    convex.mutation(api.habits.create, { name: 'Water' }),
+  ).rejects.toThrow('Unauthenticated')
+})
 ```
 
 ## CI Integration

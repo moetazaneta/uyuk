@@ -14,29 +14,35 @@ This document covers the setup, tooling, and conventions for the uyuk repository
 ## Prerequisites and Setup
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/moetazaneta/uyuk.git
    cd uyuk
    ```
 
 2. Install dependencies:
+
    ```bash
    pnpm install
    ```
 
 3. Set up Convex:
+
    ```bash
    npx convex dev
    ```
+
    Follow the prompts to create a new project. This command will also generate `convex.json` and start the backend development server.
 
 4. Configure environment variables:
    Copy `.env.example` to `.env.local` and fill in the required values.
+
    ```bash
    cp .env.example .env.local
    ```
 
 5. Run the development server:
+
    ```bash
    pnpm dev
    ```
@@ -85,58 +91,71 @@ How to run: `pnpm lint`
 
 ```json
 {
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+
+  "plugins": ["react", "typescript", "jsx-a11y"],
+
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn"
+  },
+
   "rules": {
-    "no-unused-vars": "error",
-    "no-explicit-any": "error",
-    "import/order": [
+    "no-unused-vars": [
       "error",
       {
-        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"]
+        "varsIgnorePattern": "^_",
+        "argsIgnorePattern": "^_"
       }
     ],
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
+    "eqeqeq": "error",
+    "no-console": "warn",
+
+    "typescript/no-explicit-any": "error",
+    "typescript/consistent-type-imports": "error",
+
+    "react/rules-of-hooks": "error",
+    "react/exhaustive-deps": "error",
+    "react/jsx-key": "error",
+
     "jsx-a11y/alt-text": "error",
     "jsx-a11y/anchor-has-content": "error"
-  }
+  },
+
+  "overrides": [
+    {
+      "files": ["*.test.ts", "*.test.tsx"],
+      "rules": {
+        "typescript/no-explicit-any": "off"
+      }
+    }
+  ]
 }
 ```
 
+Note: `import/order` is not supported in oxlint. Import sorting is handled by oxfmt (see Formatting section below).
+
 ## Formatting
 
-We use Biome for fast formatting and linting.
+We use oxfmt for fast, Rust-based formatting. It is Prettier-compatible with built-in import sorting and Tailwind CSS class sorting.
 
 - No semicolons
 - Single quotes
 - Tab width: 2
 
-### biome.json
+### .oxfmtrc.jsonc
 
-```json
+```jsonc
 {
-  "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
-  "formatter": {
-    "enabled": true,
-    "formatWithErrors": false,
-    "indentStyle": "space",
-    "indentWidth": 2,
-    "lineEnding": "lf",
-    "lineWidth": 80,
-    "attributePosition": "auto"
-  },
-  "javascript": {
-    "formatter": {
-      "jsxQuoteStyle": "double",
-      "quoteProperties": "asNeeded",
-      "trailingCommas": "all",
-      "semicolons": "asNeeded",
-      "arrowParentheses": "always",
-      "bracketSpacing": true,
-      "bracketSameLine": false,
-      "quoteStyle": "single",
-      "attributePosition": "auto"
-    }
-  }
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 80,
+  "semi": false,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "all",
+  "arrowParens": "always",
+  "bracketSpacing": true,
+  "endOfLine": "lf",
 }
 ```
 
@@ -151,11 +170,11 @@ pre-commit:
   parallel: true
   commands:
     lint:
-      glob: "*.{js,ts,jsx,tsx}"
+      glob: '*.{js,ts,jsx,tsx}'
       run: pnpm exec oxlint {staged_files}
     format:
-      glob: "*.{js,ts,jsx,tsx,json,md}"
-      run: pnpm exec biome format --write {staged_files}
+      glob: '*.{js,ts,jsx,tsx,json,md}'
+      run: pnpm exec oxfmt {staged_files}
 ```
 
 ## Git Workflow
@@ -176,17 +195,19 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/):
 ```
 feat: add habit creation form
 fix: correct streak calculation for timezone edge case
-chore: configure biome formatter
+chore: configure oxfmt formatter
 docs: add git workflow guide
 refactor: extract color picker into standalone component
 test: add integration tests for table view
 ```
 
 Rules:
+
 - Lowercase, no period at the end.
 - Use imperative mood ("add" not "added").
 - Keep the subject line under 72 characters.
 - Add a body for non-obvious changes (blank line after subject):
+
   ```
   fix: prevent double-tap registering two completions
 
@@ -210,6 +231,7 @@ gh pr merge --squash --delete-branch
 ```
 
 Rules:
+
 - PR title follows conventional commit format.
 - CI must pass (lint, typecheck, test, build) before merging.
 - Squash merge into `main` to keep history clean.
@@ -324,8 +346,8 @@ Defined in `package.json`:
 - `build`: `tanstack-start build`
 - `start`: `tanstack-start start`
 - `lint`: `oxlint .`
-- `format`: `biome format --write .`
-- `format:check`: `biome format .`
+- `format`: `oxfmt .`
+- `format:check`: `oxfmt --check .`
 - `typecheck`: `tsc --noEmit`
 - `test`: `vitest run`
 - `test:watch`: `vitest`
@@ -353,8 +375,8 @@ Convex environment variables are configured in the Convex dashboard and synced d
 - VS Code
 - Extensions:
   - Tailwind CSS IntelliSense
-  - Biome
+  - oxfmt
   - Convex
 - Settings:
   - `editor.formatOnSave: true`
-  - `editor.defaultFormatter: "biomejs.biome"`
+  - `editor.defaultFormatter: "oxfmt.oxfmt"`

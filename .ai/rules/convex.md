@@ -10,14 +10,14 @@
 - ALWAYS use the new function syntax for Convex functions. For example:
 
 ```typescript
-import { query } from "./_generated/server";
-import { v } from "convex/values";
+import { query } from './_generated/server'
+import { v } from 'convex/values'
 export const f = query({
   args: {},
   handler: async (ctx, args) => {
     // Function body
   },
-});
+})
 ```
 
 ### HTTP Endpoint Syntax
@@ -25,17 +25,17 @@ export const f = query({
 - HTTP endpoints are defined in `convex/http.ts` and require an `httpAction` decorator. For example:
 
 ```typescript
-import { httpRouter } from "convex/server";
-import { httpAction } from "./_generated/server";
-const http = httpRouter();
+import { httpRouter } from 'convex/server'
+import { httpAction } from './_generated/server'
+const http = httpRouter()
 http.route({
-  path: "/echo",
-  method: "POST",
+  path: '/echo',
+  method: 'POST',
   handler: httpAction(async (ctx, req) => {
-    const body = await req.bytes();
-    return new Response(body, { status: 200 });
+    const body = await req.bytes()
+    return new Response(body, { status: 200 })
   }),
-});
+})
 ```
 
 - HTTP endpoints are always registered at the exact path you specify in the `path` field.
@@ -45,8 +45,8 @@ http.route({
 - Below is an example of an array validator:
 
 ```typescript
-import { mutation } from "./_generated/server";
-import { v } from "convex/values";
+import { mutation } from './_generated/server'
+import { v } from 'convex/values'
 
 export default mutation({
   args: {
@@ -55,45 +55,45 @@ export default mutation({
   handler: async (ctx, args) => {
     //...
   },
-});
+})
 ```
 
 - Below is an example of a schema with validators that codify a discriminated union type:
 
 ```typescript
-import { defineSchema, defineTable } from "convex/server";
-import { v } from "convex/values";
+import { defineSchema, defineTable } from 'convex/server'
+import { v } from 'convex/values'
 
 export default defineSchema({
   results: defineTable(
     v.union(
       v.object({
-        kind: v.literal("error"),
+        kind: v.literal('error'),
         errorMessage: v.string(),
       }),
       v.object({
-        kind: v.literal("success"),
+        kind: v.literal('success'),
         value: v.number(),
       }),
     ),
   ),
-});
+})
 ```
 
 - Valid Convex types and validators:
 
-| Convex Type | TS/JS type  | Example Usage           | Validator                      | Notes                                                                                  |
-| ----------- | ----------- | ----------------------- | ------------------------------ | -------------------------------------------------------------------------------------- |
-| Id          | string      | `doc._id`               | `v.id(tableName)`              |                                                                                        |
-| Null        | null        | `null`                  | `v.null()`                     | `undefined` is not valid. Use `null` instead.                                          |
-| Int64       | bigint      | `3n`                    | `v.int64()`                    | Only BigInts between -2^63 and 2^63-1.                                                 |
-| Float64     | number      | `3.1`                   | `v.number()`                   | All IEEE-754 double-precision floating point numbers.                                  |
-| Boolean     | boolean     | `true`                  | `v.boolean()`                  |                                                                                        |
-| String      | string      | `"abc"`                 | `v.string()`                   | UTF-8, must be valid Unicode. Max 1MB.                                                 |
-| Bytes       | ArrayBuffer | `new ArrayBuffer(8)`    | `v.bytes()`                    | Max 1MB.                                                                               |
-| Array       | Array       | `[1, 3.2, "abc"]`       | `v.array(values)`              | Max 8192 values.                                                                       |
-| Object      | Object      | `{a: "abc"}`            | `v.object({property: value})`  | Plain objects only. Max 1024 entries. Fields must not start with "$" or "_".            |
-| Record      | Record      | `{"a": "1", "b": "2"}` | `v.record(keys, values)`       | Keys must be ASCII, nonempty, not start with "$" or "_".                               |
+| Convex Type | TS/JS type  | Example Usage          | Validator                     | Notes                                                                         |
+| ----------- | ----------- | ---------------------- | ----------------------------- | ----------------------------------------------------------------------------- |
+| Id          | string      | `doc._id`              | `v.id(tableName)`             |                                                                               |
+| Null        | null        | `null`                 | `v.null()`                    | `undefined` is not valid. Use `null` instead.                                 |
+| Int64       | bigint      | `3n`                   | `v.int64()`                   | Only BigInts between -2^63 and 2^63-1.                                        |
+| Float64     | number      | `3.1`                  | `v.number()`                  | All IEEE-754 double-precision floating point numbers.                         |
+| Boolean     | boolean     | `true`                 | `v.boolean()`                 |                                                                               |
+| String      | string      | `"abc"`                | `v.string()`                  | UTF-8, must be valid Unicode. Max 1MB.                                        |
+| Bytes       | ArrayBuffer | `new ArrayBuffer(8)`   | `v.bytes()`                   | Max 1MB.                                                                      |
+| Array       | Array       | `[1, 3.2, "abc"]`      | `v.array(values)`             | Max 8192 values.                                                              |
+| Object      | Object      | `{a: "abc"}`           | `v.object({property: value})` | Plain objects only. Max 1024 entries. Fields must not start with "$" or "\_". |
+| Record      | Record      | `{"a": "1", "b": "2"}` | `v.record(keys, values)`      | Keys must be ASCII, nonempty, not start with "$" or "\_".                     |
 
 ### Function Registration
 
@@ -117,17 +117,17 @@ export default defineSchema({
 export const f = query({
   args: { name: v.string() },
   handler: async (ctx, args) => {
-    return "Hello " + args.name;
+    return 'Hello ' + args.name
   },
-});
+})
 
 export const g = query({
   args: {},
   handler: async (ctx, args) => {
-    const result: string = await ctx.runQuery(api.example.f, { name: "Bob" });
-    return null;
+    const result: string = await ctx.runQuery(api.example.f, { name: 'Bob' })
+    return null
   },
-});
+})
 ```
 
 ### Function References
@@ -147,20 +147,20 @@ export const g = query({
 ### Pagination
 
 ```typescript
-import { v } from "convex/values";
-import { query } from "./_generated/server";
-import { paginationOptsValidator } from "convex/server";
+import { v } from 'convex/values'
+import { query } from './_generated/server'
+import { paginationOptsValidator } from 'convex/server'
 
 export const listWithExtraArg = query({
   args: { paginationOpts: paginationOptsValidator, author: v.string() },
   handler: async (ctx, args) => {
     return await ctx.db
-      .query("messages")
-      .withIndex("by_author", (q) => q.eq("author", args.author))
-      .order("desc")
-      .paginate(args.paginationOpts);
+      .query('messages')
+      .withIndex('by_author', (q) => q.eq('author', args.author))
+      .order('desc')
+      .paginate(args.paginationOpts)
   },
-});
+})
 ```
 
 - `paginationOpts` contains: `numItems` (v.number()), `cursor` (v.union(v.string(), v.null()))
@@ -185,7 +185,7 @@ export const listWithExtraArg = query({
 - For `Record` types, correctly provide key and value types:
 
 ```typescript
-const idToUsername: Record<Id<"users">, string> = {};
+const idToUsername: Record<Id<'users'>, string> = {}
 ```
 
 - Be strict with types, especially around document IDs. Use `Id<'users'>` not `string`.
@@ -195,11 +195,11 @@ const idToUsername: Record<Id<"users">, string> = {};
 
 ```typescript
 const messages = await ctx.db
-  .query("messages")
-  .withSearchIndex("search_body", (q) =>
-    q.search("body", "hello hi").eq("channel", "#general"),
+  .query('messages')
+  .withSearchIndex('search_body', (q) =>
+    q.search('body', 'hello hi').eq('channel', '#general'),
   )
-  .take(10);
+  .take(10)
 ```
 
 ## Query Guidelines
@@ -237,7 +237,7 @@ const messages = await ctx.db
 - Do NOT use deprecated `ctx.storage.getMetadata`. Query the `_storage` system table instead:
 
 ```typescript
-const metadata = await ctx.db.system.get(args.fileId);
+const metadata = await ctx.db.system.get(args.fileId)
 ```
 
 - Convex storage uses `Blob` objects. Convert to/from `Blob` when using storage.

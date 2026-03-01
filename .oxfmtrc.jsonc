@@ -1,0 +1,23 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 80,
+  "semi": false,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "all",
+  "arrowParens": "always",
+  "bracketSpacing": true,
+  "endOfLine": "lf",
+  "ignorePatterns": ["src/routeTree.gen.ts"],
+  "sortImports": {
+    "groups": [
+      "builtin",
+      "external",
+      ["internal", "subpath"],
+      ["parent", "sibling", "index"],
+      "style",
+      "unknown",
+    ],
+    "newlinesBetween": true,
+  },
+}
