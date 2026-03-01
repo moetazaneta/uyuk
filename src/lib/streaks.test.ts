@@ -67,11 +67,7 @@ describe('calculateStats', () => {
 
   it('starts current streak from yesterday if today is not completed', () => {
     const result = calculateStats(
-      makeInput(
-        ['2026-02-27', '2026-02-28'],
-        '2026-02-27',
-        '2026-03-01',
-      ),
+      makeInput(['2026-02-27', '2026-02-28'], '2026-02-27', '2026-03-01'),
     )
     expect(result.currentStreak).toBe(2)
   })
@@ -132,13 +128,7 @@ describe('calculateStats', () => {
     // Created 10 days ago, completed 5 of them
     const result = calculateStats(
       makeInput(
-        [
-          '2026-02-20',
-          '2026-02-22',
-          '2026-02-24',
-          '2026-02-26',
-          '2026-02-28',
-        ],
+        ['2026-02-20', '2026-02-22', '2026-02-24', '2026-02-26', '2026-02-28'],
         '2026-02-20',
         '2026-03-01',
       ),
@@ -185,11 +175,7 @@ describe('calculateStats', () => {
   it('handles non-leap year boundary (Feb 28 -> Mar 1)', () => {
     // In 2025 (non-leap year), Feb 28 -> Mar 1 is a gap (Feb 29 doesn't exist)
     const result = calculateStats(
-      makeInput(
-        ['2025-02-28', '2025-03-01'],
-        '2025-02-28',
-        '2025-03-01',
-      ),
+      makeInput(['2025-02-28', '2025-03-01'], '2025-02-28', '2025-03-01'),
     )
     expect(result.currentStreak).toBe(2)
     expect(result.longestStreak).toBe(2)

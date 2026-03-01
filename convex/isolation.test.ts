@@ -10,10 +10,7 @@ const modules = import.meta.glob('./**/*.ts')
  * Helper: create a test user in the users table and return
  * an identity-bound test context that getAuthUserId will resolve.
  */
-async function createTestUser(
-  t: ReturnType<typeof convexTest>,
-  name: string,
-) {
+async function createTestUser(t: ReturnType<typeof convexTest>, name: string) {
   // Insert a user record into the users table (authTables schema)
   const userId = await t.run(async (ctx) => {
     return await ctx.db.insert('users', {})
@@ -281,8 +278,8 @@ describe('authentication required', () => {
   it('unauthenticated user cannot create habits', async () => {
     const t = convexTest(schema, modules)
 
-    await expect(
-      t.mutation(api.habits.create, habitArgs),
-    ).rejects.toThrow('NOT_AUTHENTICATED')
+    await expect(t.mutation(api.habits.create, habitArgs)).rejects.toThrow(
+      'NOT_AUTHENTICATED',
+    )
   })
 })

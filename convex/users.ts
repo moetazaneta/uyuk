@@ -20,8 +20,7 @@ export const settings = query({
     return {
       timezone:
         (user as Record<string, unknown>).timezone ?? 'America/Los_Angeles',
-      weekStartDay:
-        (user as Record<string, unknown>).weekStartDay ?? 'monday',
+      weekStartDay: (user as Record<string, unknown>).weekStartDay ?? 'monday',
       tableViewDayCount:
         (user as Record<string, unknown>).tableViewDayCount ?? 7,
     }
@@ -32,9 +31,7 @@ export const settings = query({
 export const updateSettings = mutation({
   args: {
     timezone: v.optional(v.string()),
-    weekStartDay: v.optional(
-      v.union(v.literal('monday'), v.literal('sunday')),
-    ),
+    weekStartDay: v.optional(v.union(v.literal('monday'), v.literal('sunday'))),
     tableViewDayCount: v.optional(v.number()),
   },
   handler: async (ctx, args) => {

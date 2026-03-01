@@ -9,9 +9,7 @@ export default defineConfig({
     globals: true,
     setupFiles: ['./vitest.setup.ts'],
     include: ['src/**/*.test.{ts,tsx}', 'convex/**/*.test.{ts,tsx}'],
-    environmentMatchGlobs: [
-      ['convex/**/*.test.ts', 'edge-runtime'],
-    ],
+    environmentMatchGlobs: [['convex/**/*.test.ts', 'edge-runtime']],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
