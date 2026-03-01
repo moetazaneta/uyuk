@@ -81,8 +81,7 @@ export function calculateStats(input: StatsInput): StatsResult {
   // Completion rate: completed days / total days since habit creation
   const createdDate = new Date(createdAt)
   const createdStr = formatDate(createdDate)
-  const firstDate =
-    sortedDates[0] < createdStr ? sortedDates[0] : createdStr
+  const firstDate = sortedDates[0] < createdStr ? sortedDates[0] : createdStr
   const daysSinceCreation = Math.max(
     1,
     Math.round(

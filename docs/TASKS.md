@@ -62,23 +62,23 @@ This document tracks all implementation tasks for uyuk. Tasks are organized by p
 
 | #    | Task                                    | Priority | Size | Status | Notes                                                      |
 | ---- | --------------------------------------- | -------- | ---- | ------ | ---------------------------------------------------------- |
-| 2.1  | Implement habits.create mutation        | P0       | S    | [ ]    | Validate input, set sortOrder                              |
-| 2.2  | Implement habits.list query             | P0       | S    | [ ]    | Filter active, sort by sortOrder                           |
-| 2.3  | Implement habits.update mutation        | P0       | S    | [ ]    | Partial update, set updatedAt                              |
-| 2.4  | Implement habits.reorder mutation       | P0       | M    | [ ]    | Batch sortOrder update                                     |
-| 2.5  | Implement habits.archive / unarchive    | P1       | S    | [ ]    | Toggle isArchived                                          |
-| 2.6  | Implement habits.softDelete / restore   | P1       | S    | [ ]    | Toggle isDeleted                                           |
-| 2.7  | Implement habits.archived query         | P1       | S    | [ ]    | List archived habits                                       |
-| 2.8  | Implement habits.deleted query          | P1       | S    | [ ]    | List soft-deleted habits                                   |
-| 2.9  | Implement completions.upsert mutation   | P0       | M    | [ ]    | Create or update per habit+date                            |
-| 2.10 | Implement completions.clear mutation    | P1       | S    | [ ]    | Reset value to 0 (never delete records)                    |
-| 2.11 | Implement completions.byDateRange query | P0       | M    | [ ]    | Fetch completions within date range                        |
-| 2.12 | Implement completions.byHabit query     | P1       | S    | [ ]    | All completions for one habit                              |
-| 2.13 | Implement stats.forHabit query          | P1       | M    | [ ]    | Streak, longest streak, total completions, completion rate |
-| 2.14 | Implement user.settings query           | P1       | S    | [ ]    | Get current user preferences                               |
-| 2.15 | Implement user.updateSettings mutation  | P1       | S    | [ ]    | Update weekStartDay, timezone, etc.                        |
-| 2.16 | Write unit tests for streak calculation | P1       | M    | [ ]    | Edge cases: gaps, timezone, new habits                     |
-| 2.17 | Write backend tests for data isolation  | P1       | M    | [ ]    | User A cannot see User B data                              |
+| 2.1  | Implement habits.create mutation        | P0       | S    | [x]    | Validate input, set sortOrder                              |
+| 2.2  | Implement habits.list query             | P0       | S    | [x]    | Filter active, sort by sortOrder                           |
+| 2.3  | Implement habits.update mutation        | P0       | S    | [x]    | Partial update, set updatedAt                              |
+| 2.4  | Implement habits.reorder mutation       | P0       | M    | [x]    | Batch sortOrder update                                     |
+| 2.5  | Implement habits.archive / unarchive    | P1       | S    | [x]    | Toggle isArchived                                          |
+| 2.6  | Implement habits.softDelete / restore   | P1       | S    | [x]    | Toggle isDeleted                                           |
+| 2.7  | Implement habits.archived query         | P1       | S    | [x]    | List archived habits                                       |
+| 2.8  | Implement habits.deleted query          | P1       | S    | [x]    | List soft-deleted habits                                   |
+| 2.9  | Implement completions.upsert mutation   | P0       | M    | [x]    | Create or update per habit+date                            |
+| 2.10 | Implement completions.clear mutation    | P1       | S    | [x]    | Reset value to 0 (never delete records)                    |
+| 2.11 | Implement completions.byDateRange query | P0       | M    | [x]    | Fetch completions within date range                        |
+| 2.12 | Implement completions.byHabit query     | P1       | S    | [x]    | All completions for one habit                              |
+| 2.13 | Implement stats.forHabit query          | P1       | M    | [x]    | Streak, longest streak, total completions, completion rate |
+| 2.14 | Implement user.settings query           | P1       | S    | [x]    | Get current user preferences                               |
+| 2.15 | Implement user.updateSettings mutation  | P1       | S    | [x]    | Update weekStartDay, timezone, etc.                        |
+| 2.16 | Write unit tests for streak calculation | P1       | M    | [x]    | Edge cases: gaps, timezone, new habits                     |
+| 2.17 | Write backend tests for data isolation  | P1       | M    | [x]    | User A cannot see User B data                              |
 
 ---
 
@@ -212,20 +212,20 @@ These are documented for planning but NOT part of the initial build.
 
 ## Progress Summary
 
-| Phase          | Total  | Done  | In Progress | Blocked |
-| -------------- | ------ | ----- | ----------- | ------- |
-| 0. Scaffolding | 12     | 0     | 0           | 0       |
-| 1. Auth        | 6      | 6     | 0           | 0       |
-| 2. Data Layer  | 17     | 0     | 0           | 0       |
-| 3. App Shell   | 6      | 0     | 0           | 0       |
-| 4. Habit CRUD  | 9      | 0     | 0           | 0       |
-| 5. Table View  | 11     | 0     | 0           | 0       |
-| 6. Grids View  | 10     | 0     | 0           | 0       |
-| 7. Settings    | 8      | 0     | 0           | 0       |
-| 8. Polish      | 10     | 0     | 0           | 0       |
-| 9. CI/CD       | 6      | 0     | 0           | 0       |
-| **Total v1**   | **95** | **6** | **0**       | **0**   |
-| 10. Future     | 10     | 0     | 0           | 0       |
+| Phase          | Total  | Done   | In Progress | Blocked |
+| -------------- | ------ | ------ | ----------- | ------- |
+| 0. Scaffolding | 12     | 0      | 0           | 0       |
+| 1. Auth        | 6      | 6      | 0           | 0       |
+| 2. Data Layer  | 17     | 17     | 0           | 0       |
+| 3. App Shell   | 6      | 0      | 0           | 0       |
+| 4. Habit CRUD  | 9      | 0      | 0           | 0       |
+| 5. Table View  | 11     | 0      | 0           | 0       |
+| 6. Grids View  | 10     | 0      | 0           | 0       |
+| 7. Settings    | 8      | 0      | 0           | 0       |
+| 8. Polish      | 10     | 0      | 0           | 0       |
+| 9. CI/CD       | 6      | 0      | 0           | 0       |
+| **Total v1**   | **95** | **23** | **0**       | **0**   |
+| 10. Future     | 10     | 0      | 0           | 0       |
 
 ## Dependencies
 

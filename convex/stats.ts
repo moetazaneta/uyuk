@@ -1,9 +1,8 @@
 import { getAuthUserId } from '@convex-dev/auth/server'
 import { v } from 'convex/values'
 
-import { calculateStats } from './lib/streaks'
-
 import { query } from './_generated/server'
+import { calculateStats } from './lib/streaks'
 
 // 2.13: stats.forHabit — streak, longest streak, total completions, completion rate
 export const forHabit = query({
