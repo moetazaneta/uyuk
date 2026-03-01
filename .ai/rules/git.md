@@ -28,9 +28,18 @@ Rules:
 
 ## Pull Requests
 
-- Push branch, open PR against `main`
+Use `gh` CLI for all PR operations:
+
+```bash
+# Create PR
+gh pr create --title "feat: description" --body "Summary"
+
+# Squash merge when ready
+gh pr merge --squash --delete-branch
+```
+
 - PR title = conventional commit format
-- CI must pass (lint, typecheck, test, build) before merge
+- CI must pass before merge
 - Squash merge to keep history clean
 
 ## Pre-commit Hooks (Lefthook)
