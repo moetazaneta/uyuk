@@ -49,12 +49,12 @@ This document tracks all implementation tasks for uyuk. Tasks are organized by p
 
 | #   | Task                                              | Priority | Size | Status | Notes                                 |
 | --- | ------------------------------------------------- | -------- | ---- | ------ | ------------------------------------- |
-| 1.1 | Define Convex schema (users, habits, completions) | P0       | M    | [ ]    | Per ARCHITECTURE.md                   |
-| 1.2 | Set up Convex Auth with Google OAuth              | P0       | M    | [ ]    | Auth config, provider setup           |
-| 1.3 | Create auth page (/auth)                          | P0       | M    | [ ]    | Google sign-in button, redirect logic |
-| 1.4 | Implement auth route guard                        | P0       | S    | [ ]    | Redirect unauthenticated to /auth     |
-| 1.5 | Create root layout with auth provider             | P0       | M    | [ ]    | ConvexProvider, AuthProvider wrapping |
-| 1.6 | Write integration tests for auth flow             | P1       | M    | [ ]    | Login, redirect, session persistence  |
+| 1.1 | Define Convex schema (users, habits, completions) | P0       | M    | [x]    | Per ARCHITECTURE.md                   |
+| 1.2 | Set up Convex Auth with Google OAuth              | P0       | M    | [x]    | Auth config, provider setup           |
+| 1.3 | Create auth page (/auth)                          | P0       | M    | [x]    | Google sign-in button, redirect logic |
+| 1.4 | Implement auth route guard                        | P0       | S    | [x]    | Redirect unauthenticated to /auth     |
+| 1.5 | Create root layout with auth provider             | P0       | M    | [x]    | ConvexProvider, AuthProvider wrapping |
+| 1.6 | Write integration tests for auth flow             | P1       | M    | [x]    | Login, redirect, session persistence  |
 
 ---
 
@@ -215,7 +215,7 @@ These are documented for planning but NOT part of the initial build.
 | Phase          | Total  | Done  | In Progress | Blocked |
 | -------------- | ------ | ----- | ----------- | ------- |
 | 0. Scaffolding | 12     | 0     | 0           | 0       |
-| 1. Auth        | 6      | 0     | 0           | 0       |
+| 1. Auth        | 6      | 6     | 0           | 0       |
 | 2. Data Layer  | 17     | 0     | 0           | 0       |
 | 3. App Shell   | 6      | 0     | 0           | 0       |
 | 4. Habit CRUD  | 9      | 0     | 0           | 0       |
@@ -224,7 +224,7 @@ These are documented for planning but NOT part of the initial build.
 | 7. Settings    | 8      | 0     | 0           | 0       |
 | 8. Polish      | 10     | 0     | 0           | 0       |
 | 9. CI/CD       | 6      | 0     | 0           | 0       |
-| **Total v1**   | **95** | **0** | **0**       | **0**   |
+| **Total v1**   | **95** | **6** | **0**       | **0**   |
 | 10. Future     | 10     | 0     | 0           | 0       |
 
 ## Dependencies

@@ -30,25 +30,32 @@ uyuk/
 │   └── rules/              # Library-specific AI coding rules
 │       ├── convex.md       # Convex official rules (ALWAYS ACTIVE)
 │       ├── tanstack.md     # TanStack Router/Start rules (ALWAYS ACTIVE)
+│       ├── git.md          # Git commit/PR conventions
 │       ├── tailwind.md     # Tailwind CSS v4 rules (OPTIONAL)
 │       ├── react.md        # React 19 rules (OPTIONAL)
 │       ├── vitest.md       # Vitest testing rules (OPTIONAL)
 │       └── playwright.md   # Playwright E2E rules (OPTIONAL)
 ├── .cursor/rules/          # Cursor AI rules
-│   └── convex.mdc          # Convex rules for Cursor
-├── .github/instructions/   # GitHub Copilot rules
-│   └── convex.instructions.md
-├── app/                    # TanStack Start app (routes, components)
-├── convex/                 # Convex backend (schema, functions)
-├── docs/                   # Project documentation
-│   ├── README.md           # Documentation index
-│   ├── PRD.md              # Product requirements
-│   ├── ARCHITECTURE.md     # Technical architecture
-│   ├── DESIGN.md           # Design system
+├── .github/
+│   ├── instructions/       # GitHub Copilot rules
+│   └── workflows/          # CI/CD (GitHub Actions)
+├── convex/                 # Convex backend
+│   └── schema.ts           # DB schema (currently empty, implement per ARCHITECTURE.md)
+├── docs/                   # Full project documentation (read before implementing)
+│   ├── PRD.md              # What to build
+│   ├── ARCHITECTURE.md     # How it's structured + schema + file layout
+│   ├── DESIGN.md           # How it looks (terminal aesthetic, colors, spacing)
 │   ├── TESTING.md          # Testing strategy
-│   ├── DEVELOPMENT.md      # Development setup
-│   └── TASKS.md            # Task tracker
-└── e2e/                    # Playwright E2E tests
+│   ├── DEVELOPMENT.md      # Dev setup, env vars, CI/CD
+│   └── TASKS.md            # All 95 tasks across 10 phases — start here
+├── e2e/                    # Playwright E2E tests (*.spec.ts)
+└── src/                    # TanStack Start app
+    ├── routes/             # File-based routes (__root.tsx, index.tsx)
+    ├── components/         # React components (empty — to be built)
+    ├── styles/             # Tailwind v4 entry (app.css)
+    ├── utils/              # Shared utilities (empty — to be built)
+    ├── router.tsx          # Router factory (ConvexQueryClient + TanStack Router)
+    └── routeTree.gen.ts    # Auto-generated route tree (DO NOT EDIT)
 ```
 
 ## Rules Management
@@ -87,6 +94,29 @@ After project initialization, install TanStack's official AI rules from the NPM 
 pnpm add -g vibe-rules
 vibe-rules install cursor    # For Cursor users
 ```
+
+## Commands
+
+```bash
+pnpm dev              # Start TanStack Start dev server (port 3000)
+pnpm dev:backend      # Start Convex dev server (run alongside pnpm dev)
+pnpm build            # Production build
+pnpm typecheck        # tsc --noEmit
+pnpm lint             # oxlint
+pnpm format           # oxfmt (auto-format)
+pnpm format:check     # oxfmt --check
+pnpm test             # Vitest unit tests
+pnpm test:watch       # Vitest watch mode
+pnpm test:coverage    # Vitest with v8 coverage
+pnpm test:e2e         # Playwright E2E tests
+pnpm validate         # typecheck + lint + test (full pre-merge check)
+```
+
+## Current State
+
+**Phase 0 scaffolding complete.** All feature tasks (Phases 1–9) are `[ ]` not started.
+See `docs/TASKS.md` for the full 95-task implementation plan.
+Start with Phase 1 (Auth) → Phase 2 (Convex data layer) → Phase 3 (App Shell).
 
 ## Coding Conventions
 
