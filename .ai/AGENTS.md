@@ -197,6 +197,17 @@ Full project documentation is in `/docs/`. Read these before implementing:
 
 ## Git Workflow
 
-All git operations (commits, branches, PRs) are handled by a dedicated git agent.
-Load the `git-master` skill and the project git rules at `.ai/rules/git.md` when delegating.
+At the end of every phase, run the full branch → PR → merge cycle:
+
+1. **Check** previous phase PR is merged: `gh pr list --state merged`
+2. `git checkout main && git pull origin main`
+3. `git checkout -b feat/phase-N-<slug>`
+4. Commit work (atomic commits, conventional commit format)
+5. `git push -u origin feat/phase-N-<slug>`
+6. `gh pr create --title "feat: <description> (Phase N)" ...`
+7. `gh pr merge --squash --delete-branch`
+8. `git checkout main && git pull origin main`
+9. `git branch -d feat/phase-N-<slug>` (delete stale local branch)
+
+Load the `git-master` skill and `.ai/rules/git.md` when delegating git operations.
 See `docs/DEVELOPMENT.md` §Git Workflow for the full human-readable guide.
