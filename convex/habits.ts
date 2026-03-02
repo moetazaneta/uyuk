@@ -70,6 +70,24 @@ export const list = query({
   },
 })
 
+// 2.2.5: habits.getById — get single habit by ID
+export const getById = query({
+  args: { id: v.id('habits') },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx)
+    if (!userId) {
+      return null
+    }
+
+    const habit = await ctx.db.get(args.id)
+    if (!habit || habit.userId !== userId) {
+      return null
+    }
+
+    return habit
+  },
+})
+
 // 2.3: habits.update — partial update with updatedAt
 export const update = mutation({
   args: {

@@ -9,7 +9,7 @@ import { routeTree } from './routeTree.gen'
 export function getRouter() {
   const CONVEX_URL = import.meta.env.VITE_CONVEX_URL as string
   if (!CONVEX_URL) {
-    console.error('missing envar VITE_CONVEX_URL')
+    console.error('missing envar VITE_CONVEX_URL') // eslint-disable-line no-console
   }
 
   const convexQueryClient = new ConvexQueryClient(CONVEX_URL)

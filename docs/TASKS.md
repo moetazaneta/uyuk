@@ -99,15 +99,15 @@ This document tracks all implementation tasks for uyuk. Tasks are organized by p
 
 | #   | Task                                      | Priority | Size | Status | Notes                                 |
 | --- | ----------------------------------------- | -------- | ---- | ------ | ------------------------------------- |
-| 4.1 | Create HabitForm component                | P0       | L    | [ ]    | Name, desc, icon, color, type, target |
-| 4.2 | Build icon picker (emoji + icon library)  | P0       | L    | [ ]    | Tabbed picker, search, selection      |
-| 4.3 | Build color picker (palette + custom hex) | P0       | M    | [ ]    | 12 swatches + hex input               |
-| 4.4 | Build type toggle (boolean vs numeric)    | P0       | S    | [ ]    | Segmented control, conditional fields |
-| 4.5 | Implement habit creation modal (desktop)  | P0       | M    | [ ]    | Modal overlay, form inside            |
-| 4.6 | Implement habit creation screen (mobile)  | P0       | M    | [ ]    | Full-screen route /habits/new         |
-| 4.7 | Implement habit editing (reuse form)      | P0       | M    | [ ]    | Pre-fill form, update mutation        |
-| 4.8 | Add form validation                       | P0       | S    | [ ]    | Name required, target > 0             |
-| 4.9 | Write integration tests for habit CRUD    | P1       | L    | [ ]    | Create, edit, validate, cancel        |
+| 4.1 | Create HabitForm component                | P0       | L    | [x]    | Name, desc, icon, color, type, target |
+| 4.2 | Build icon picker (emoji + icon library)  | P0       | L    | [x]    | Tabbed picker, search, selection      |
+| 4.3 | Build color picker (palette + custom hex) | P0       | M    | [x]    | 12 swatches + hex input               |
+| 4.4 | Build type toggle (boolean vs numeric)    | P0       | S    | [x]    | Segmented control, conditional fields |
+| 4.5 | Implement habit creation modal (desktop)  | P0       | M    | [x]    | Modal overlay, form inside            |
+| 4.6 | Implement habit creation screen (mobile)  | P0       | M    | [x]    | Full-screen route /habits/new         |
+| 4.7 | Implement habit editing (reuse form)      | P0       | M    | [x]    | Pre-fill form, update mutation        |
+| 4.8 | Add form validation                       | P0       | S    | [x]    | Name required, target > 0             |
+| 4.9 | Write integration tests for habit CRUD    | P1       | L    | [x]    | Create, edit, validate, cancel        |
 
 ---
 
@@ -218,13 +218,13 @@ These are documented for planning but NOT part of the initial build.
 | 1. Auth        | 6      | 6      | 0           | 0       |
 | 2. Data Layer  | 17     | 17     | 0           | 0       |
 | 3. App Shell   | 6      | 6      | 0           | 0       |
-| 4. Habit CRUD  | 9      | 0      | 0           | 0       |
+| 4. Habit CRUD  | 9      | 9      | 0           | 0       |
 | 5. Table View  | 11     | 0      | 0           | 0       |
 | 6. Grids View  | 10     | 0      | 0           | 0       |
 | 7. Settings    | 8      | 0      | 0           | 0       |
 | 8. Polish      | 10     | 0      | 0           | 0       |
 | 9. CI/CD       | 6      | 0      | 0           | 0       |
-| **Total v1**   | **95** | **29** | **0**       | **0**   |
+| **Total v1**   | **95** | **38** | **0**       | **0**   |
 | 10. Future     | 10     | 0      | 0           | 0       |
 
 ## Dependencies

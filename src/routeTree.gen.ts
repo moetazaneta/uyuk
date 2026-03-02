@@ -15,6 +15,8 @@ import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/
 import { Route as AuthenticatedTableRouteImport } from './routes/_authenticated/table'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedGridsRouteImport } from './routes/_authenticated/grids'
+import { Route as AuthenticatedHabitsNewRouteImport } from './routes/_authenticated/habits/new'
+import { Route as AuthenticatedHabitsHabitIdEditRouteImport } from './routes/_authenticated/habits/$habitId/edit'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
@@ -45,6 +47,17 @@ const AuthenticatedGridsRoute = AuthenticatedGridsRouteImport.update({
   path: '/grids',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedHabitsNewRoute = AuthenticatedHabitsNewRouteImport.update({
+  id: '/habits/new',
+  path: '/habits/new',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedHabitsHabitIdEditRoute =
+  AuthenticatedHabitsHabitIdEditRouteImport.update({
+    id: '/habits/$habitId/edit',
+    path: '/habits/$habitId/edit',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
@@ -52,6 +65,8 @@ export interface FileRoutesByFullPath {
   '/grids': typeof AuthenticatedGridsRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/table': typeof AuthenticatedTableRoute
+  '/habits/new': typeof AuthenticatedHabitsNewRoute
+  '/habits/$habitId/edit': typeof AuthenticatedHabitsHabitIdEditRoute
 }
 export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
@@ -59,6 +74,8 @@ export interface FileRoutesByTo {
   '/settings': typeof AuthenticatedSettingsRoute
   '/table': typeof AuthenticatedTableRoute
   '/': typeof AuthenticatedIndexRoute
+  '/habits/new': typeof AuthenticatedHabitsNewRoute
+  '/habits/$habitId/edit': typeof AuthenticatedHabitsHabitIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -68,12 +85,28 @@ export interface FileRoutesById {
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/table': typeof AuthenticatedTableRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/habits/new': typeof AuthenticatedHabitsNewRoute
+  '/_authenticated/habits/$habitId/edit': typeof AuthenticatedHabitsHabitIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/grids' | '/settings' | '/table'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/grids'
+    | '/settings'
+    | '/table'
+    | '/habits/new'
+    | '/habits/$habitId/edit'
   fileRoutesByTo: FileRoutesByTo
-  to: '/auth' | '/grids' | '/settings' | '/table' | '/'
+  to:
+    | '/auth'
+    | '/grids'
+    | '/settings'
+    | '/table'
+    | '/'
+    | '/habits/new'
+    | '/habits/$habitId/edit'
   id:
     | '__root__'
     | '/_authenticated'
@@ -82,6 +115,8 @@ export interface FileRouteTypes {
     | '/_authenticated/settings'
     | '/_authenticated/table'
     | '/_authenticated/'
+    | '/_authenticated/habits/new'
+    | '/_authenticated/habits/$habitId/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -133,6 +168,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedGridsRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/habits/new': {
+      id: '/_authenticated/habits/new'
+      path: '/habits/new'
+      fullPath: '/habits/new'
+      preLoaderRoute: typeof AuthenticatedHabitsNewRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/habits/$habitId/edit': {
+      id: '/_authenticated/habits/$habitId/edit'
+      path: '/habits/$habitId/edit'
+      fullPath: '/habits/$habitId/edit'
+      preLoaderRoute: typeof AuthenticatedHabitsHabitIdEditRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
@@ -141,6 +190,8 @@ interface AuthenticatedRouteChildren {
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedTableRoute: typeof AuthenticatedTableRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+  AuthenticatedHabitsNewRoute: typeof AuthenticatedHabitsNewRoute
+  AuthenticatedHabitsHabitIdEditRoute: typeof AuthenticatedHabitsHabitIdEditRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
@@ -148,6 +199,8 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedTableRoute: AuthenticatedTableRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedHabitsNewRoute: AuthenticatedHabitsNewRoute,
+  AuthenticatedHabitsHabitIdEditRoute: AuthenticatedHabitsHabitIdEditRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
