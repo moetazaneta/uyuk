@@ -1,12 +1,18 @@
 import { useAuthActions } from '@convex-dev/auth/react'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { useState } from 'react'
 
 export const Route = createFileRoute('/auth')({
   component: AuthPage,
 })
 
+const DEV_EMAIL = 'qwerty@dev.local'
+const DEV_PASSWORD = 'qwerty'
+
 export function AuthPage() {
   const { signIn } = useAuthActions()
+  const navigate = useNavigate()
+  const [devLoading, setDevLoading] = useState(false)
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-black">
@@ -26,6 +32,37 @@ export function AuthPage() {
           <GoogleIcon />
           Sign in with Google
         </button>
+
+        {import.meta.env.DEV && (
+          <button
+            type="button"
+            disabled={devLoading}
+            onClick={async () => {
+              setDevLoading(true)
+              try {
+                try {
+                  await signIn('password', {
+                    email: DEV_EMAIL,
+                    password: DEV_PASSWORD,
+                    flow: 'signIn',
+                  })
+                } catch {
+                  await signIn('password', {
+                    email: DEV_EMAIL,
+                    password: DEV_PASSWORD,
+                    flow: 'signUp',
+                  })
+                }
+                void navigate({ to: '/' })
+              } finally {
+                setDevLoading(false)
+              }
+            }}
+            className="font-mono text-xs text-zinc-600 hover:text-zinc-400 transition-colors disabled:opacity-40"
+          >
+            {devLoading ? 'signing in…' : '⚡ dev login'}
+          </button>
+        )}
       </div>
     </div>
   )
