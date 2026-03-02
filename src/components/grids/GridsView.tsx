@@ -84,7 +84,7 @@ export function GridsView() {
       >
         <div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="bg-bg-elevated p-4 h-48 animate-pulse" />
+            <div key={i} className="border border-divider h-48 animate-pulse" />
           ))}
         </div>
       </div>

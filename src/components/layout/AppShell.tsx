@@ -9,7 +9,7 @@ interface AppShellProps {
 
 export function AppShell({ children }: AppShellProps) {
   return (
-    <div className="flex h-screen w-full bg-bg">
+    <div className="flex h-[100dvh] w-full bg-bg">
       {/* Desktop Sidebar */}
       <div className="hidden h-full w-[240px] shrink-0 md:block">
         <Sidebar />
@@ -20,7 +20,7 @@ export function AppShell({ children }: AppShellProps) {
         <main className="flex-1 overflow-y-auto">{children}</main>
 
         {/* Mobile Bottom Tab Bar */}
-        <div className="block h-[56px] shrink-0 md:hidden">
+        <div className="block shrink-0 md:hidden">
           <BottomTabBar />
         </div>
       </div>
