@@ -115,17 +115,17 @@ This document tracks all implementation tasks for uyuk. Tasks are organized by p
 
 | #    | Task                                   | Priority | Size | Status | Notes                                           |
 | ---- | -------------------------------------- | -------- | ---- | ------ | ----------------------------------------------- |
-| 5.1  | Create TableView page component        | P0       | M    | [ ]    | Route /table, data fetching                     |
-| 5.2  | Build table header (day columns)       | P0       | M    | [ ]    | Day labels, today highlight, configurable count |
-| 5.3  | Build habit row component              | P0       | L    | [ ]    | Icon, name, day cells, stats                    |
-| 5.4  | Implement boolean cell interaction     | P0       | M    | [ ]    | Tap to increment, visual fill state             |
-| 5.5  | Implement numeric cell interaction     | P0       | M    | [ ]    | Tap to open input, save value                   |
-| 5.6  | Implement drag-and-drop reordering     | P1       | L    | [ ]    | Drag handle, optimistic reorder                 |
-| 5.7  | Add configurable day column count      | P1       | M    | [ ]    | Settings-driven, responsive                     |
-| 5.8  | Style table per DESIGN.md              | P1       | M    | [ ]    | Row height, cell size, today highlight          |
-| 5.9  | Implement backfill (past day cells)    | P1       | S    | [ ]    | All cells interactive, not just today           |
-| 5.10 | Show inline stats (streak, rate)       | P2       | M    | [ ]    | Compact display at row end                      |
-| 5.11 | Write integration tests for table view | P1       | L    | [ ]    | Render, tap, increment, numeric input           |
+| 5.1  | Create TableView page component        | P0       | M    | [x]    | Route /table, data fetching                     |
+| 5.2  | Build table header (day columns)       | P0       | M    | [x]    | Day labels, today highlight, configurable count |
+| 5.3  | Build habit row component              | P0       | L    | [x]    | Icon, name, day cells, stats                    |
+| 5.4  | Implement boolean cell interaction     | P0       | M    | [x]    | Tap to increment, visual fill state             |
+| 5.5  | Implement numeric cell interaction     | P0       | M    | [x]    | Tap to open input, save value                   |
+| 5.6  | Implement drag-and-drop reordering     | P1       | L    | [x]    | Drag handle, optimistic reorder                 |
+| 5.7  | Add configurable day column count      | P1       | M    | [x]    | Settings-driven, responsive                     |
+| 5.8  | Style table per DESIGN.md              | P1       | M    | [x]    | Row height, cell size, today highlight          |
+| 5.9  | Implement backfill (past day cells)    | P1       | S    | [x]    | All cells interactive, not just today           |
+| 5.10 | Show inline stats (streak, rate)       | P2       | M    | [x]    | Compact display at row end                      |
+| 5.11 | Write integration tests for table view | P1       | L    | [x]    | Render, tap, increment, numeric input           |
 
 ---
 
@@ -219,12 +219,12 @@ These are documented for planning but NOT part of the initial build.
 | 2. Data Layer  | 17     | 17     | 0           | 0       |
 | 3. App Shell   | 6      | 6      | 0           | 0       |
 | 4. Habit CRUD  | 9      | 9      | 0           | 0       |
-| 5. Table View  | 11     | 0      | 0           | 0       |
+| 5. Table View  | 11     | 11     | 0           | 0       |
 | 6. Grids View  | 10     | 0      | 0           | 0       |
 | 7. Settings    | 8      | 0      | 0           | 0       |
 | 8. Polish      | 10     | 0      | 0           | 0       |
 | 9. CI/CD       | 6      | 0      | 0           | 0       |
-| **Total v1**   | **95** | **38** | **0**       | **0**   |
+| **Total v1**   | **95** | **49** | **0**       | **0**   |
 | 10. Future     | 10     | 0      | 0           | 0       |
 
 ## Dependencies
