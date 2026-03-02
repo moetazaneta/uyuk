@@ -81,7 +81,7 @@ export function DayCell({
     setOptimisticValue(newValue)
     setIsEditing(false)
     setError(null)
-    
+
     try {
       await onUpdate(newValue)
     } catch {

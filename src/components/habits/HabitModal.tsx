@@ -28,10 +28,12 @@ export function HabitModal({ isOpen, onClose, onSuccess }: HabitModalProps) {
       if (e.key !== 'Tab' || !modalRef.current) return
 
       const focusableElements = modalRef.current.querySelectorAll(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
       )
       const firstElement = focusableElements[0] as HTMLElement
-      const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement
+      const lastElement = focusableElements[
+        focusableElements.length - 1
+      ] as HTMLElement
 
       if (e.shiftKey) {
         if (document.activeElement === firstElement) {
@@ -56,7 +58,7 @@ export function HabitModal({ isOpen, onClose, onSuccess }: HabitModalProps) {
     // Focus first element initially
     setTimeout(() => {
       const focusableElements = modalRef.current?.querySelectorAll(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
       )
       if (focusableElements && focusableElements.length > 0) {
         ;(focusableElements[0] as HTMLElement).focus()
@@ -85,7 +87,10 @@ export function HabitModal({ isOpen, onClose, onSuccess }: HabitModalProps) {
         ref={modalRef}
         className="w-full max-w-[480px] bg-bg border border-divider p-6 shadow-2xl animate-[slideUp_200ms_ease-out] max-h-[90vh] overflow-y-auto"
       >
-        <h2 id="modal-title" className="text-xl font-bold mb-6 font-mono text-text-primary">
+        <h2
+          id="modal-title"
+          className="text-xl font-bold mb-6 font-mono text-text-primary"
+        >
           new habit
         </h2>
         <HabitForm
