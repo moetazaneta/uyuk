@@ -43,8 +43,9 @@ export function HabitGrid({
       ? ['M', 'T', 'W', 'T', 'F', 'S', 'S']
       : ['S', 'M', 'T', 'W', 'T', 'F', 'S']
 
-  // Container-query based cell sizing — fills the card width across 15 columns (7 day labels + 14 data cols)
-  const cellSize = 'w-[calc((100cqw-3.75rem)/15)] h-[calc((100cqw-3.75rem)/15)]'
+  // Day label column is fixed narrow; data cells fill the remaining width across 14 columns
+  const labelSize = 'w-3 h-[calc((100cqw-2.5rem)/14)]'
+  const cellSize = 'w-[calc((100cqw-2.5rem)/14)] h-[calc((100cqw-2.5rem)/14)]'
   const gap = 'gap-0.5'
 
   const renderedIcon = icon ? (
@@ -65,7 +66,7 @@ export function HabitGrid({
 
   return (
     <div
-      className={`@container bg-bg-elevated p-4 flex flex-col gap-4 ${isAllHabits ? 'col-span-full xl:col-span-2 2xl:col-span-3' : ''}`}
+      className={`@container bg-bg-elevated p-4 flex flex-col gap-4 overflow-hidden ${isAllHabits ? 'col-span-full xl:col-span-2 2xl:col-span-3' : ''}`}
     >
       <div
         className={`flex justify-between items-center font-mono ${isAllHabits ? 'text-lg' : 'text-sm'}`}
@@ -81,13 +82,11 @@ export function HabitGrid({
         )}
       </div>
 
-      <div
-        className={`grid grid-flow-col grid-rows-7 w-full ${gap} pb-2`}
-      >
+      <div className={`grid grid-flow-col grid-rows-7 w-full ${gap}`}>
         {daysOfWeek.map((day, i) => (
           <div
             key={`header-${i}`}
-            className={`text-[10px] text-text-secondary text-right pr-2 font-mono flex items-center justify-end ${cellSize}`}
+            className={`text-[10px] text-text-secondary font-mono flex items-center justify-center ${labelSize}`}
           >
             {day}
           </div>
