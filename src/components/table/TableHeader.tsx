@@ -17,7 +17,9 @@ export function TableHeader({ dates, showStats = false }: TableHeaderProps) {
 
       <div className="flex">
         {dates.map(({ dateStr, label, dayOfMonth, isToday }) => {
-          const colorClass = isToday ? 'text-text-primary font-bold' : 'text-text-secondary'
+          const colorClass = isToday
+            ? 'text-text-primary font-bold'
+            : 'text-text-secondary'
 
           return (
             <div
