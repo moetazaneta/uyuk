@@ -44,8 +44,8 @@ export function HabitGrid({
       : ['S', 'M', 'T', 'W', 'T', 'F', 'S']
 
   // Day label column is fixed narrow; data cells fill the remaining width across 14 columns
-  const labelSize = 'w-3 h-[calc((100cqw-2.5rem)/14)]'
-  const cellSize = 'w-[calc((100cqw-2.5rem)/14)] h-[calc((100cqw-2.5rem)/14)]'
+  const labelSize = 'w-6 h-[calc((100cqw-3.25rem)/14)]'
+  const cellSize = 'w-[calc((100cqw-3.25rem)/14)] h-[calc((100cqw-3.25rem)/14)]'
   const gap = 'gap-0.5'
 
   const renderedIcon = icon ? (
