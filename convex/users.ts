@@ -26,6 +26,8 @@ export const settings = query({
       weekStartDay: (user as Record<string, unknown>).weekStartDay ?? 'monday',
       tableViewDayCount:
         (user as Record<string, unknown>).tableViewDayCount ?? 7,
+      showStatsInTable:
+        ((user as Record<string, unknown>).showStatsInTable as boolean) ?? false,
     }
   },
 })
@@ -36,6 +38,7 @@ export const updateSettings = mutation({
     timezone: v.optional(v.string()),
     weekStartDay: v.optional(v.union(v.literal('monday'), v.literal('sunday'))),
     tableViewDayCount: v.optional(v.number()),
+    showStatsInTable: v.optional(v.boolean()),
   },
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx)
@@ -58,12 +61,16 @@ export const updateSettings = mutation({
     if (args.tableViewDayCount !== undefined) {
       patch.tableViewDayCount = args.tableViewDayCount
     }
+    if (args.showStatsInTable !== undefined) {
+      patch.showStatsInTable = args.showStatsInTable
+    }
 
     if (Object.keys(patch).length > 0) {
       await ctx.db.patch(userId, patch)
     }
   },
 })
+
 export const updateDisplayName = mutation({
   args: { name: v.string() },
   handler: async (ctx, args) => {

@@ -77,8 +77,8 @@ describe('SettingsView', () => {
     render(<SettingsView />)
     expect(screen.getByTestId('settings-view')).toBeInTheDocument()
     expect(screen.getByDisplayValue('Test User')).toBeInTheDocument()
-    expect(screen.getByText('Monday ▾')).toBeInTheDocument()
-    expect(screen.getByText('Sunday ▾')).toBeInTheDocument()
+    expect(screen.getByText('monday ▾')).toBeInTheDocument()
+    expect(screen.getByText('sunday ▾')).toBeInTheDocument()
     expect(screen.getByText('no archived habits')).toBeInTheDocument()
     expect(screen.getByText('no deleted habits')).toBeInTheDocument()
     expect(
@@ -89,7 +89,7 @@ describe('SettingsView', () => {
   it('week start toggle calls updateSettings', async () => {
     render(<SettingsView />)
 
-    const sundayBtn = screen.getByText('Sunday ▾')
+    const sundayBtn = screen.getByText('sunday ▾')
     await act(async () => {
       fireEvent.click(sundayBtn)
     })

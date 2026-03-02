@@ -36,9 +36,7 @@ export function SettingsView() {
         data-testid="settings-loading"
       >
         <div className="max-w-2xl mx-auto flex flex-col gap-8 pb-20 font-mono text-sm">
-          <h1 className="text-xl md:text-2xl font-bold font-mono text-text-primary uppercase">
-            settings
-          </h1>
+
 
           <div className="flex flex-col gap-4">
             <div className="h-6 w-24 bg-bg-subtle/50 animate-pulse border-b border-divider pb-1" />
@@ -77,9 +75,7 @@ export function SettingsView() {
       data-testid="settings-view"
     >
       <div className="max-w-2xl mx-auto flex flex-col gap-8 pb-20 font-mono text-sm">
-        <h1 className="text-xl md:text-2xl font-bold font-mono text-text-primary uppercase">
-          settings
-        </h1>
+
 
         <section className="flex flex-col gap-4">
           <h2 className="text-text-secondary uppercase tracking-widest text-xs border-b border-divider pb-1">
@@ -103,7 +99,7 @@ export function SettingsView() {
                 disabled={isSavingName || displayName === settings.name}
                 className="px-4 py-2 bg-[#ededed] text-[#0a0a0a] hover:bg-[#d4d4d4] disabled:opacity-50 transition-colors"
               >
-                {isSavingName ? 'Saving...' : 'Save'}
+                {isSavingName ? 'saving...' : 'save'}
               </button>
             </div>
           </div>
@@ -125,7 +121,7 @@ export function SettingsView() {
                     : 'bg-bg text-text-secondary hover:bg-bg-elevated'
                 }`}
               >
-                Monday ▾
+                monday ▾
               </button>
               <button
                 onClick={() => updateSettings({ weekStartDay: 'sunday' })}
@@ -135,7 +131,7 @@ export function SettingsView() {
                     : 'bg-bg text-text-secondary hover:bg-bg-elevated'
                 }`}
               >
-                Sunday ▾
+                sunday ▾
               </button>
             </div>
           </div>
@@ -184,7 +180,7 @@ export function SettingsView() {
                     onClick={() => unarchiveHabit({ id: habit._id })}
                     className="px-3 py-1 bg-bg-subtle text-text-primary border border-divider hover:bg-[#ededed] hover:text-[#0a0a0a] transition-colors"
                   >
-                    Unarchive
+                    unarchive
                   </button>
                 </div>
               ))
@@ -219,7 +215,7 @@ export function SettingsView() {
                     onClick={() => restoreHabit({ id: habit._id })}
                     className="px-3 py-1 bg-bg-subtle text-text-primary border border-divider hover:bg-[#ededed] hover:text-[#0a0a0a] transition-colors"
                   >
-                    Restore
+                    restore
                   </button>
                 </div>
               ))
@@ -240,7 +236,7 @@ export function SettingsView() {
               }}
               className="px-4 py-2 border border-divider text-[#ef4444] hover:bg-[#ef4444] hover:text-white transition-colors"
             >
-              Sign out
+              sign out
             </button>
           </div>
         </section>
