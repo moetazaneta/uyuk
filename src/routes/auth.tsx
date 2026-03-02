@@ -7,7 +7,7 @@ export const Route = createFileRoute('/auth')({
 })
 
 const DEV_EMAIL = 'qwerty@dev.local'
-const DEV_PASSWORD = 'qwerty'
+const DEV_PASSWORD = 'Qwerty123!'
 
 export function AuthPage() {
   const { signIn } = useAuthActions()
