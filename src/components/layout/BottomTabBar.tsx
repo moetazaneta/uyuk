@@ -1,4 +1,5 @@
 import { Link, useRouterState } from '@tanstack/react-router'
+
 import { GridsIcon, SettingsIcon, TableIcon } from './Icons'
 
 const navItems = [
@@ -24,7 +25,9 @@ export function BottomTabBar() {
             }`}
           >
             <item.icon className="h-6 w-6" />
-            <span className="font-mono text-[10px] leading-none">{item.label}</span>
+            <span className="font-mono text-[10px] leading-none">
+              {item.label}
+            </span>
           </Link>
         )
       })}

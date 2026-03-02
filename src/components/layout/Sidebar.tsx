@@ -1,4 +1,5 @@
 import { Link, useRouterState } from '@tanstack/react-router'
+
 import { GridsIcon, SettingsIcon, TableIcon } from './Icons'
 
 const navItems = [

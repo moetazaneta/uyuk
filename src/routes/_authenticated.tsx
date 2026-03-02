@@ -1,8 +1,9 @@
-import { AppShell } from '../components/layout/AppShell'
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 import { useNavigate } from '@tanstack/react-router'
 import { useConvexAuth } from 'convex/react'
 import { useEffect } from 'react'
+
+import { AppShell } from '../components/layout/AppShell'
 
 export const Route = createFileRoute('/_authenticated')({
   component: AuthenticatedLayout,

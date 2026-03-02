@@ -1,5 +1,5 @@
-import type React from 'react'
 import { render, screen, act } from '@testing-library/react'
+import type React from 'react'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
 // Mocks must be declared before the imports they affect (vitest hoists vi.mock calls)
@@ -18,8 +18,19 @@ vi.mock('@tanstack/react-router', () => ({
   Outlet: () => <div data-testid="outlet" />,
   useNavigate: () => mockNavigate,
   useRouterState: () => ({ location: { pathname: '/table' } }),
-  Link: ({ children, to, className }: { children: React.ReactNode; to: string; className?: string }) =>
-    <a href={to} className={className}>{children}</a>,
+  Link: ({
+    children,
+    to,
+    className,
+  }: {
+    children: React.ReactNode
+    to: string
+    className?: string
+  }) => (
+    <a href={to} className={className}>
+      {children}
+    </a>
+  ),
 }))
 
 import { AuthenticatedLayout } from './_authenticated'
