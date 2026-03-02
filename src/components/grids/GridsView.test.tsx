@@ -62,7 +62,7 @@ describe('GridsView', () => {
     mockHabits = []
     render(<GridsView />)
     expect(screen.getByText(/No habits yet/i)).toBeInTheDocument()
-    expect(screen.getByText(/Create your first habit/i)).toBeInTheDocument()
+    expect(screen.getByText(/\+ new habit/i)).toBeInTheDocument()
   })
 
   it('renders All Habits grid and combined view', () => {
@@ -80,7 +80,7 @@ describe('GridsView', () => {
     render(<GridsView />)
     expect(screen.getByTestId('grids-view')).toBeInTheDocument()
     expect(screen.getByText('All Habits')).toBeInTheDocument()
-    expect(screen.getByText('Drink Water')).toBeInTheDocument()
+    expect(screen.getByText(/Drink Water/)).toBeInTheDocument()
   })
 
   it('renders habit stats if available', () => {
