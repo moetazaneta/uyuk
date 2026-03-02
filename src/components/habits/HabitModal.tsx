@@ -24,26 +24,68 @@ export function HabitModal({ isOpen, onClose, onSuccess }: HabitModalProps) {
       }
     }
 
+    const handleTab = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab' || !modalRef.current) return
+
+      const focusableElements = modalRef.current.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      )
+      const firstElement = focusableElements[0] as HTMLElement
+      const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement
+
+      if (e.shiftKey) {
+        if (document.activeElement === firstElement) {
+          lastElement.focus()
+          e.preventDefault()
+        }
+      } else {
+        if (document.activeElement === lastElement) {
+          firstElement.focus()
+          e.preventDefault()
+        }
+      }
+    }
+
+    const previousFocus = document.activeElement as HTMLElement
+
     document.addEventListener('keydown', handleEscape)
+    document.addEventListener('keydown', handleTab)
     document.addEventListener('mousedown', handleClickOutside)
     document.body.style.overflow = 'hidden' // Prevent scrolling behind modal
 
+    // Focus first element initially
+    setTimeout(() => {
+      const focusableElements = modalRef.current?.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      )
+      if (focusableElements && focusableElements.length > 0) {
+        ;(focusableElements[0] as HTMLElement).focus()
+      }
+    }, 10)
+
     return () => {
       document.removeEventListener('keydown', handleEscape)
+      document.removeEventListener('keydown', handleTab)
       document.removeEventListener('mousedown', handleClickOutside)
       document.body.style.overflow = 'unset'
+      previousFocus?.focus()
     }
   }, [isOpen, onClose])
 
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 animate-[fadeIn_200ms_ease-out]">
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 animate-[fadeIn_200ms_ease-out]"
+    >
       <div
         ref={modalRef}
         className="w-full max-w-[480px] bg-bg border border-divider p-6 shadow-2xl animate-[slideUp_200ms_ease-out] max-h-[90vh] overflow-y-auto"
       >
-        <h2 className="text-xl font-bold mb-6 font-mono text-text-primary">
+        <h2 id="modal-title" className="text-xl font-bold mb-6 font-mono text-text-primary">
           new habit
         </h2>
         <HabitForm
