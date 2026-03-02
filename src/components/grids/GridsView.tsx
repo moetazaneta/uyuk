@@ -20,11 +20,11 @@ export function GridsView() {
   const { dates, startDate, endDate, startOffset } = useMemo(() => {
     const today = new Date()
     today.setHours(0, 0, 0, 0)
-    
+
     // We want 98 days (14 weeks)
     const daysCount = 98
     const datesArr: { dateStr: string; dateObj: Date }[] = []
-    
+
     for (let i = daysCount - 1; i >= 0; i--) {
       const d = new Date(today.getTime() - i * 86400000)
       datesArr.push({
@@ -92,10 +92,11 @@ export function GridsView() {
     return (
       <div className="flex-1 overflow-auto bg-bg p-4 md:p-6">
         <div className="flex-1 flex flex-col items-center justify-center text-text-secondary h-[50vh]">
-          <div className="text-center font-mono text-sm">
-            No habits yet.
-          </div>
-          <Link to="/habits/new" className="text-sm font-sans text-text-secondary hover:text-text-primary transition-colors border border-divider px-4 py-2 mt-4">
+          <div className="text-center font-mono text-sm">No habits yet.</div>
+          <Link
+            to="/habits/new"
+            className="text-sm font-sans text-text-secondary hover:text-text-primary transition-colors border border-divider px-4 py-2 mt-4"
+          >
             + new habit
           </Link>
         </div>
@@ -159,7 +160,14 @@ export function GridsView() {
               key={habit._id}
               habitId={habit._id}
               name={habit.name}
-              icon={habit.iconType && habit.iconValue ? { type: habit.iconType as 'emoji' | 'icon', value: habit.iconValue } : undefined}
+              icon={
+                habit.iconType && habit.iconValue
+                  ? {
+                      type: habit.iconType as 'emoji' | 'icon',
+                      value: habit.iconValue,
+                    }
+                  : undefined
+              }
               color={habit.color}
               cells={cells}
               weekStart={

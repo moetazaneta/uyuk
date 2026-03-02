@@ -36,8 +36,6 @@ export function SettingsView() {
         data-testid="settings-loading"
       >
         <div className="max-w-2xl mx-auto flex flex-col gap-8 pb-20 font-mono text-sm">
-
-
           <div className="flex flex-col gap-4">
             <div className="h-6 w-24 bg-bg-subtle/50 animate-pulse border-b border-divider pb-1" />
             <div className="h-10 bg-bg-elevated animate-pulse border border-divider" />
@@ -75,8 +73,6 @@ export function SettingsView() {
       data-testid="settings-view"
     >
       <div className="max-w-2xl mx-auto flex flex-col gap-8 pb-20 font-mono text-sm">
-
-
         <section className="flex flex-col gap-4">
           <h2 className="text-text-secondary uppercase tracking-widest text-xs border-b border-divider pb-1">
             profile

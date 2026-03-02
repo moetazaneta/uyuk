@@ -27,7 +27,8 @@ export const settings = query({
       tableViewDayCount:
         (user as Record<string, unknown>).tableViewDayCount ?? 7,
       showStatsInTable:
-        ((user as Record<string, unknown>).showStatsInTable as boolean) ?? false,
+        ((user as Record<string, unknown>).showStatsInTable as boolean) ??
+        false,
     }
   },
 })

@@ -157,10 +157,11 @@ export function TableView({ dayCount: initialDayCount = 7 }: TableViewProps) {
   if (habits.length === 0) {
     return (
       <div className="flex-1 flex items-center justify-center bg-bg text-text-secondary flex-col">
-        <div className="text-center font-mono text-sm mb-4">
-          No habits yet.
-        </div>
-        <Link to="/habits/new" className="text-sm font-sans text-text-secondary hover:text-text-primary transition-colors border border-divider px-4 py-2">
+        <div className="text-center font-mono text-sm mb-4">No habits yet.</div>
+        <Link
+          to="/habits/new"
+          className="text-sm font-sans text-text-secondary hover:text-text-primary transition-colors border border-divider px-4 py-2"
+        >
           + new habit
         </Link>
       </div>
@@ -205,7 +206,7 @@ export function TableView({ dayCount: initialDayCount = 7 }: TableViewProps) {
             </div>
           </SortableContext>
         </DndContext>
-        
+
         <div className="pt-2 pb-4 px-2">
           <Link
             to="/habits/new"

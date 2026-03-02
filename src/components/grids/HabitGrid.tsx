@@ -52,15 +52,25 @@ export function HabitGrid({
     icon.type === 'emoji' ? (
       icon.value
     ) : (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="inline-block mr-1">
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        className="inline-block mr-1"
+      >
         <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
       </svg>
     )
   ) : null
 
   return (
-    <div className={`bg-bg-elevated p-4 flex flex-col gap-4 ${isAllHabits ? 'col-span-full xl:col-span-2 2xl:col-span-3' : ''}`}>
-      <div className={`flex justify-between items-center font-mono ${isAllHabits ? 'text-lg' : 'text-sm'}`}>
+    <div
+      className={`bg-bg-elevated p-4 flex flex-col gap-4 ${isAllHabits ? 'col-span-full xl:col-span-2 2xl:col-span-3' : ''}`}
+    >
+      <div
+        className={`flex justify-between items-center font-mono ${isAllHabits ? 'text-lg' : 'text-sm'}`}
+      >
         <span className="text-text-primary font-medium flex items-center gap-2">
           {renderedIcon}
           {name}
@@ -72,7 +82,9 @@ export function HabitGrid({
         )}
       </div>
 
-      <div className={`grid grid-flow-col grid-rows-7 w-fit ${gap} overflow-x-auto pb-2`}>
+      <div
+        className={`grid grid-flow-col grid-rows-7 w-fit ${gap} overflow-x-auto pb-2`}
+      >
         {daysOfWeek.map((day, i) => (
           <div
             key={`header-${i}`}

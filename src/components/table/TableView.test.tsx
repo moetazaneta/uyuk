@@ -12,8 +12,16 @@ let mockSettings: any = { showStatsInTable: false, weekStartDay: 'monday' }
 
 vi.mock('convex/react', () => ({
   useMutation: (apiFn: unknown) => {
-    if (apiFn === 'mock_api_completions_upsert') { const m: any = mockUpsert; m.withOptimisticUpdate = () => m; return m }
-    if (apiFn === 'mock_api_habits_reorder') { const m: any = mockReorder; m.withOptimisticUpdate = () => m; return m }
+    if (apiFn === 'mock_api_completions_upsert') {
+      const m: any = mockUpsert
+      m.withOptimisticUpdate = () => m
+      return m
+    }
+    if (apiFn === 'mock_api_habits_reorder') {
+      const m: any = mockReorder
+      m.withOptimisticUpdate = () => m
+      return m
+    }
     return vi.fn()
   },
   useQuery: (apiFn: unknown, _args: any) => {
