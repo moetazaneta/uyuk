@@ -131,6 +131,40 @@ export function SettingsView() {
               </button>
             </div>
           </div>
+          <div className="flex flex-col gap-2">
+            <div className="text-text-secondary">Table stats</div>
+            <button
+              onClick={() =>
+                updateSettings({ showStatsInTable: !settings.showStatsInTable })
+              }
+              className={`px-4 py-2 border border-divider transition-colors text-left ${
+                settings.showStatsInTable
+                  ? 'bg-bg-subtle text-text-primary'
+                  : 'bg-bg text-text-secondary hover:bg-bg-elevated'
+              }`}
+            >
+              {settings.showStatsInTable ? 'stats visible' : 'stats hidden'}
+            </button>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <div className="text-text-secondary">Mobile days visible</div>
+            <div className="flex gap-2">
+              {[3, 5, 7, 10, 14].map((n) => (
+                <button
+                  key={n}
+                  onClick={() => updateSettings({ mobileTableViewDayCount: n })}
+                  className={`flex-1 px-2 py-2 border border-divider transition-colors ${
+                    (settings.mobileTableViewDayCount ?? 7) === n
+                      ? 'bg-bg-subtle text-text-primary'
+                      : 'bg-bg text-text-secondary hover:bg-bg-elevated'
+                  }`}
+                >
+                  {n}
+                </button>
+              ))}
+            </div>
+          </div>
 
           <div className="flex flex-col gap-2">
             <label htmlFor="timezone" className="text-text-secondary">
