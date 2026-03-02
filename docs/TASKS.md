@@ -182,12 +182,12 @@ This document tracks all implementation tasks for uyuk. Tasks are organized by p
 
 | #   | Task                                 | Priority | Size | Status | Notes                             |
 | --- | ------------------------------------ | -------- | ---- | ------ | --------------------------------- |
-| 9.1 | Set up GitHub Actions workflow       | P1       | M    | [ ]    | Lint, typecheck, test, build      |
-| 9.2 | Configure Vercel deployment          | P1       | M    | [ ]    | Auto-deploy, preview branches     |
-| 9.3 | Set up Convex production environment | P1       | S    | [ ]    | Separate from dev                 |
-| 9.4 | Configure environment variables      | P1       | S    | [ ]    | Vercel + Convex env vars          |
-| 9.5 | Write E2E tests for critical paths   | P2       | L    | [ ]    | Signup -> create -> log -> verify |
-| 9.6 | Set up coverage reporting            | P2       | S    | [ ]    | Vitest coverage, threshold checks |
+| 9.1 | Set up GitHub Actions workflow       | P1       | M    | [x]    | .github/workflows/ci.yml          |
+| 9.2 | Configure Vercel deployment          | P1       | M    | [~]    | vercel.json exists; connect repo in Vercel dashboard |
+| 9.3 | Set up Convex production environment | P1       | S    | [~]    | Run: npx convex deploy --prod      |
+| 9.4 | Configure environment variables      | P1       | S    | [~]    | Add VITE_CONVEX_URL + CONVEX_DEPLOY_KEY to Vercel |
+| 9.5 | Write E2E tests for critical paths   | P2       | L    | [x]    | e2e/critical-paths.spec.ts         |
+| 9.6 | Set up coverage reporting            | P2       | S    | [x]    | vitest --coverage, uploaded in CI  |
 
 ---
 
