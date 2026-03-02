@@ -171,7 +171,10 @@ export function TableView({ dayCount: initialDayCount = 7 }: TableViewProps) {
   return (
     <div className="flex-1 overflow-auto bg-bg" data-testid="table-view">
       <div className="min-w-max">
-        <TableHeader dates={dates} showStats={settings?.showStatsInTable ?? false} />
+        <TableHeader
+          dates={dates}
+          showStats={settings?.showStatsInTable ?? false}
+        />
 
         <DndContext
           sensors={sensors}
