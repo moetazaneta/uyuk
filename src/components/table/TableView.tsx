@@ -163,8 +163,8 @@ export function TableView({ dayCount = 7 }: TableViewProps) {
                     habit={habit}
                     dates={dates}
                     completionsByDate={habitCompletions}
-                    onUpdateCompletion={(dateStr, value) => {
-                      upsertCompletion({
+                    onUpdateCompletion={async (dateStr, value) => {
+                      await upsertCompletion({
                         habitId: habit._id,
                         date: dateStr,
                         value,
