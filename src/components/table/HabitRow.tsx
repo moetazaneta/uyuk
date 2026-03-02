@@ -11,6 +11,7 @@ export interface HabitRowProps {
   habit: Doc<'habits'>
   dates: { dateStr: string; isToday: boolean }[]
   completionsByDate: Record<string, number> // Map of date string to value
+  showStats?: boolean
   onUpdateCompletion: (date: string, value: number) => Promise<void> | void
 }
 
@@ -18,6 +19,7 @@ export function HabitRow({
   habit,
   dates,
   completionsByDate,
+  showStats = false,
   onUpdateCompletion,
 }: HabitRowProps) {
   const stats = useQuery(api.stats.forHabit, { habitId: habit._id })
@@ -37,8 +39,6 @@ export function HabitRow({
     opacity: isDragging ? 0.8 : 1,
   }
 
-  // 1. Drag handle: ⠿ or ≡
-  // 2. Icon (emoji or simple svg placeholder)
   const icon =
     habit.iconType === 'emoji' ? (
       habit.iconValue
@@ -56,17 +56,15 @@ export function HabitRow({
     <div
       ref={setNodeRef}
       style={style}
-      className="flex items-center h-10 px-3 border-b border-divider hover:bg-bg-subtle group"
+      className="flex items-center h-9 px-0 md:px-2 hover:bg-bg-subtle group"
+      {...attributes}
+      {...listeners}
     >
-      <div
-        {...attributes}
-        {...listeners}
-        className="text-text-disabled cursor-grab active:cursor-grabbing w-6 flex-shrink-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-      >
+      <div className="text-text-disabled cursor-grab active:cursor-grabbing w-6 flex-shrink-0 items-center justify-center opacity-0 md:group-hover:opacity-100 transition-opacity hidden md:flex">
         ⠿
       </div>
 
-      <div className="w-6 flex-shrink-0 flex items-center justify-center text-sm mr-2">
+      <div className="w-6 flex-shrink-0 flex items-center justify-center text-sm mr-2 max-md:pl-2">
         {icon}
       </div>
 
@@ -81,24 +79,27 @@ export function HabitRow({
           const value = completionsByDate[dateStr] ?? 0
 
           return (
-            <DayCell
-              key={dateStr}
-              date={dateStr}
-              isToday={isToday}
-              value={value}
-              target={habit.target}
-              habitType={habit.type}
-              habitColor={habit.color}
-              habitName={habit.name}
-              onUpdate={(newValue) => onUpdateCompletion(dateStr, newValue)}
-            />
+            <div key={dateStr} onPointerDown={(e) => e.stopPropagation()}>
+              <DayCell
+                date={dateStr}
+                isToday={isToday}
+                value={value}
+                target={habit.target}
+                habitType={habit.type}
+                habitColor={habit.color}
+                habitName={habit.name}
+                onUpdate={(newValue) => onUpdateCompletion(dateStr, newValue)}
+              />
+            </div>
           )
         })}
       </div>
 
-      <div className="w-[80px] ml-4 text-right font-mono text-xs text-text-secondary flex-shrink-0">
-        {statsDisplay}
-      </div>
+      {showStats && (
+        <div className="w-[80px] ml-4 text-right font-mono text-xs text-text-secondary flex-shrink-0">
+          {statsDisplay}
+        </div>
+      )}
     </div>
   )
 }

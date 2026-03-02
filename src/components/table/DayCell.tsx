@@ -38,11 +38,7 @@ export function DayCell({
 
   // Determine base background
   const isZero = displayValue === 0
-  const baseBg = isToday
-    ? 'bg-bg-subtle border-b-2 border-focus'
-    : isZero
-      ? 'bg-bg-subtle'
-      : 'bg-bg'
+  const baseBg = isToday || isZero ? 'bg-bg-subtle' : 'bg-bg'
 
   // Use habit color with opacity if partial, or full if 100%
   // But actually, the requirements say:
@@ -59,7 +55,7 @@ export function DayCell({
 
   const handleTap = async () => {
     if (habitType === 'boolean') {
-      const newValue = displayValue + 1
+      const newValue = displayValue >= target ? 0 : displayValue + 1
       setOptimisticValue(newValue)
       setError(null)
       setIsAnimating(true)
