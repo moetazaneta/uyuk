@@ -2,6 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { useState } from 'react'
 
 import { HabitModal } from '../../components/habits/HabitModal'
+import { TableView as TableViewComponent } from '../../components/table/TableView'
 
 export const Route = createFileRoute('/_authenticated/table')({
   component: TableView,
@@ -11,8 +12,8 @@ function TableView() {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   return (
-    <div className="flex-1 p-6 h-full flex flex-col relative">
-      <div className="flex items-center justify-between mb-4">
+    <div className="flex-1 p-6 h-full flex flex-col relative overflow-hidden">
+      <div className="flex items-center justify-between mb-4 flex-shrink-0">
         <h1 className="text-2xl font-bold font-mono text-text-primary">
           table
         </h1>
@@ -25,8 +26,8 @@ function TableView() {
         </button>
       </div>
 
-      <div className="flex-1 bg-bg-elevated text-text-secondary flex items-center justify-center font-mono relative">
-        table view placeholder
+      <div className="flex-1 bg-bg-elevated flex flex-col relative overflow-hidden border border-divider">
+        <TableViewComponent dayCount={7} />
       </div>
 
       {/* Mobile Floating Action Button */}
