@@ -103,7 +103,7 @@ export function DayCell({
       <button
         type="button"
         aria-label={ariaLabel}
-        className={`relative flex items-end justify-center w-7 h-7 min-w-[36px] min-h-[36px] md:min-w-0 md:min-h-0 md:w-7 md:h-7 lg:w-8 lg:h-8 cursor-pointer overflow-hidden transition-transform duration-100 ${
+        className={`relative flex items-end justify-center w-9 h-9 md:w-7 md:h-7 lg:w-8 lg:h-8 cursor-pointer overflow-hidden transition-transform duration-100 ${
           isAnimating ? 'scale-105' : ''
         } ${baseBg}`}
         onClick={handleTap}

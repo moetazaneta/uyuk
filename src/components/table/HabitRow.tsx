@@ -56,7 +56,7 @@ export function HabitRow({
     <div
       ref={setNodeRef}
       style={style}
-      className="flex items-center h-9 px-0 md:px-2 hover:bg-bg-subtle group"
+      className="flex items-center h-9 md:h-7 lg:h-8 hover:bg-bg-subtle group border-b border-divider last:border-b-0"
       {...attributes}
       {...listeners}
     >
@@ -64,11 +64,11 @@ export function HabitRow({
         ⠿
       </div>
 
-      <div className="w-6 flex-shrink-0 flex items-center justify-center text-sm mr-2 max-md:pl-2">
+      <div className="w-5 flex-shrink-0 flex items-center justify-center text-sm md:mr-2 pl-2">
         {icon}
       </div>
 
-      <div className="font-sans text-sm text-text-primary truncate max-w-[120px] sm:max-w-[160px] mr-2">
+      <div className="font-sans text-sm text-text-primary truncate max-w-[90px] sm:max-w-[130px] md:max-w-[120px] lg:max-w-[180px] mr-2">
         {habit.name}
       </div>
 
