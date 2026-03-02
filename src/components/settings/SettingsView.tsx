@@ -35,11 +35,26 @@ export function SettingsView() {
         className="flex-1 overflow-auto bg-bg p-4 md:p-6"
         data-testid="settings-loading"
       >
-        <div className="max-w-2xl mx-auto flex flex-col gap-6">
-          <h1 className="text-xl md:text-2xl font-bold font-mono text-text-primary">
+        <div className="max-w-2xl mx-auto flex flex-col gap-8 pb-20 font-mono text-sm">
+          <h1 className="text-xl md:text-2xl font-bold font-mono text-text-primary uppercase">
             settings
           </h1>
-          <div className="bg-bg-elevated p-4 h-32 animate-pulse" />
+
+          <div className="flex flex-col gap-4">
+            <div className="h-6 w-24 bg-bg-subtle/50 animate-pulse border-b border-divider pb-1" />
+            <div className="h-10 bg-bg-elevated animate-pulse border border-divider" />
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <div className="h-6 w-32 bg-bg-subtle/50 animate-pulse border-b border-divider pb-1" />
+            <div className="h-10 bg-bg-elevated animate-pulse border border-divider" />
+            <div className="h-10 bg-bg-elevated animate-pulse border border-divider mt-2" />
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <div className="h-6 w-40 bg-bg-subtle/50 animate-pulse border-b border-divider pb-1" />
+            <div className="h-16 bg-bg-elevated animate-pulse border border-divider" />
+          </div>
         </div>
       </div>
     )
