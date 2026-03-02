@@ -44,7 +44,8 @@ export function HabitGrid({
       : ['S', 'M', 'T', 'W', 'T', 'F', 'S']
 
   // Container-query based cell sizing — fills the card width across 14 columns
-  const cellSize = 'w-[calc((100cqw-3.625rem)/14)] h-[calc((100cqw-3.625rem)/14)]'
+  const cellSize =
+    'w-[calc((100cqw-3.625rem)/14)] h-[calc((100cqw-3.625rem)/14)]'
   const gap = 'gap-0.5'
 
   const renderedIcon = icon ? (
@@ -81,9 +82,7 @@ export function HabitGrid({
         )}
       </div>
 
-      <div
-        className={`grid grid-flow-col grid-rows-7 w-full ${gap} pb-2`}
-      >
+      <div className={`grid grid-flow-col grid-rows-7 w-full ${gap} pb-2`}>
         {daysOfWeek.map((day, i) => (
           <div
             key={`header-${i}`}

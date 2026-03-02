@@ -140,14 +140,14 @@ export function TableView({ dayCount: initialDayCount = 7 }: TableViewProps) {
 
   if (orderedHabits === undefined) {
     return (
-      <div className="flex-1 overflow-auto bg-bg p-4 md:p-6" data-testid="table-loading">
+      <div
+        className="flex-1 overflow-auto bg-bg p-4 md:p-6"
+        data-testid="table-loading"
+      >
         <TableHeader dates={dates} />
         <div className="flex flex-col">
           {[1, 2, 3].map((i) => (
-            <div
-              key={i}
-              className="h-10 border border-divider animate-pulse"
-            />
+            <div key={i} className="h-10 border border-divider animate-pulse" />
           ))}
         </div>
       </div>
@@ -169,7 +169,10 @@ export function TableView({ dayCount: initialDayCount = 7 }: TableViewProps) {
   }
 
   return (
-    <div className="flex-1 overflow-auto bg-bg p-4 md:p-6" data-testid="table-view">
+    <div
+      className="flex-1 overflow-auto bg-bg p-4 md:p-6"
+      data-testid="table-view"
+    >
       <div className="min-w-max">
         <TableHeader
           dates={dates}
