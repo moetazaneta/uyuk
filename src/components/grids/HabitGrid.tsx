@@ -43,8 +43,8 @@ export function HabitGrid({
       ? ['M', 'T', 'W', 'T', 'F', 'S', 'S']
       : ['S', 'M', 'T', 'W', 'T', 'F', 'S']
 
-  // Container-query based cell sizing — fills the card width across 14 columns
-  const cellSize = 'w-[calc((100cqw-3.625rem)/14)] h-[calc((100cqw-3.625rem)/14)]'
+  // Container-query based cell sizing — fills the card width across 15 columns (7 day labels + 14 data cols)
+  const cellSize = 'w-[calc((100cqw-3.75rem)/15)] h-[calc((100cqw-3.75rem)/15)]'
   const gap = 'gap-0.5'
 
   const renderedIcon = icon ? (
