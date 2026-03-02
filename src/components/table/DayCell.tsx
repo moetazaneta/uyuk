@@ -37,8 +37,7 @@ export function DayCell({
   const percentage = Math.min((displayValue / target) * 100, 100)
 
   // Determine base background
-  const isZero = displayValue === 0
-  const baseBg = isToday || isZero ? 'bg-bg-subtle' : 'bg-bg'
+  const baseBg = isToday ? 'bg-bg-subtle' : 'bg-bg'
 
   // Use habit color with opacity if partial, or full if 100%
   // But actually, the requirements say:
