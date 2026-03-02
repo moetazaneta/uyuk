@@ -18,8 +18,9 @@ export const settings = query({
     }
 
     return {
+      name: (user as Record<string, unknown>).name as string | undefined ?? '',
       timezone:
-        (user as Record<string, unknown>).timezone ?? 'America/Los_Angeles',
+        ((user as Record<string, unknown>).timezone as string) ?? 'America/Los_Angeles',
       weekStartDay: (user as Record<string, unknown>).weekStartDay ?? 'monday',
       tableViewDayCount:
         (user as Record<string, unknown>).tableViewDayCount ?? 7,
@@ -61,3 +62,15 @@ export const updateSettings = mutation({
     }
   },
 })
+export const updateDisplayName = mutation({
+  args: { name: v.string() },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx)
+    if (!userId) {
+      throw new ConvexError('NOT_AUTHENTICATED')
+    }
+    
+    await ctx.db.patch(userId, { name: args.name })
+  },
+})
+
