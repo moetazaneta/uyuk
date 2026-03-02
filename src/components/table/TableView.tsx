@@ -128,11 +128,12 @@ export function TableView({ dayCount: initialDayCount = 7 }: TableViewProps) {
       const newIndex = habits.findIndex((h) => h._id === over.id)
 
       if (oldIndex !== -1 && newIndex !== -1) {
+        // Build new order and call mutation — the withOptimisticUpdate handles local reorder
         const newHabits = [...habits]
         const [moved] = newHabits.splice(oldIndex, 1)
         if (moved) {
           newHabits.splice(newIndex, 0, moved)
-          reorder({ ids: newHabits.map((h) => h._id) })
+          void reorder({ ids: newHabits.map((h) => h._id) })
         }
       }
     }
