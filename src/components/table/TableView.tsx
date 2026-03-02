@@ -44,18 +44,15 @@ export function TableView({ dayCount: initialDayCount = 7 }: TableViewProps) {
   const settings = useQuery(api.users.settings)
   const habits = useQuery(api.habits.list)
   const upsertCompletion = useMutation(api.completions.upsert)
-  const reorder = useMutation(api.habits.reorder).withOptimisticUpdate(
-    (localStore, args) => {
-      const existing = localStore.getQuery(api.habits.list)
-      if (existing) {
-        const idMap = new Map(existing.map((h) => [h._id, h]))
-        const newHabits = args.ids
-          .map((id) => idMap.get(id))
-          .filter((h): h is NonNullable<typeof h> => h !== undefined)
-        localStore.setQuery(api.habits.list, {}, newHabits)
-      }
-    },
-  )
+  const reorder = useMutation(api.habits.reorder)
+
+  // Local ordered state avoids dnd-kit snap-back teleport: we own the order,
+  // and only sync from server when it changes externally.
+  const [orderedHabits, setOrderedHabits] = useState<typeof habits>(undefined)
+
+  useEffect(() => {
+    if (habits !== undefined) setOrderedHabits(habits)
+  }, [habits])
 
   const [windowWidth, setWindowWidth] = useState(
     typeof window !== 'undefined' ? window.innerWidth : 1024,
@@ -69,11 +66,12 @@ export function TableView({ dayCount: initialDayCount = 7 }: TableViewProps) {
 
   const dayCount = useMemo(() => {
     if (initialDayCount !== 7) return initialDayCount
-    if (windowWidth < 768) return 7 // mobile
+    if (windowWidth < 768) return settings?.mobileTableViewDayCount ?? 7 // mobile
     if (windowWidth < 1024) return 14 // md
     if (windowWidth < 1280) return 21 // lg
     return 28 // xl/2xl
-  }, [windowWidth, initialDayCount])
+  }, [windowWidth, initialDayCount, settings?.mobileTableViewDayCount])
+
   const dates = useMemo(() => {
     const today = new Date()
     today.setHours(0, 0, 0, 0)
@@ -123,23 +121,24 @@ export function TableView({ dayCount: initialDayCount = 7 }: TableViewProps) {
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event
 
-    if (over && active.id !== over.id && habits) {
-      const oldIndex = habits.findIndex((h) => h._id === active.id)
-      const newIndex = habits.findIndex((h) => h._id === over.id)
+    if (over && active.id !== over.id && orderedHabits) {
+      const oldIndex = orderedHabits.findIndex((h) => h._id === active.id)
+      const newIndex = orderedHabits.findIndex((h) => h._id === over.id)
 
       if (oldIndex !== -1 && newIndex !== -1) {
-        // Build new order and call mutation — the withOptimisticUpdate handles local reorder
-        const newHabits = [...habits]
-        const [moved] = newHabits.splice(oldIndex, 1)
+        const next = [...orderedHabits]
+        const [moved] = next.splice(oldIndex, 1)
         if (moved) {
-          newHabits.splice(newIndex, 0, moved)
-          void reorder({ ids: newHabits.map((h) => h._id) })
+          next.splice(newIndex, 0, moved)
+          // Update local state immediately — no visual snap-back
+          setOrderedHabits(next)
+          void reorder({ ids: next.map((h) => h._id) })
         }
       }
     }
   }
 
-  if (habits === undefined) {
+  if (orderedHabits === undefined) {
     return (
       <div className="flex-1 overflow-auto bg-bg" data-testid="table-loading">
         <TableHeader dates={dates} />
@@ -155,7 +154,7 @@ export function TableView({ dayCount: initialDayCount = 7 }: TableViewProps) {
     )
   }
 
-  if (habits.length === 0) {
+  if (!orderedHabits || orderedHabits.length === 0) {
     return (
       <div className="flex-1 flex items-center justify-center bg-bg text-text-secondary flex-col">
         <div className="text-center font-mono text-sm mb-4">No habits yet.</div>
@@ -172,7 +171,7 @@ export function TableView({ dayCount: initialDayCount = 7 }: TableViewProps) {
   return (
     <div className="flex-1 overflow-auto bg-bg" data-testid="table-view">
       <div className="min-w-max">
-        <TableHeader dates={dates} />
+        <TableHeader dates={dates} showStats={settings?.showStatsInTable ?? false} />
 
         <DndContext
           sensors={sensors}
@@ -180,11 +179,11 @@ export function TableView({ dayCount: initialDayCount = 7 }: TableViewProps) {
           onDragEnd={handleDragEnd}
         >
           <SortableContext
-            items={habits.map((h) => h._id)}
+            items={orderedHabits.map((h) => h._id)}
             strategy={verticalListSortingStrategy}
           >
             <div className="flex flex-col">
-              {habits.map((habit) => {
+              {orderedHabits.map((habit) => {
                 const habitCompletions = completionsMap[habit._id] ?? {}
 
                 return (

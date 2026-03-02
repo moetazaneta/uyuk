@@ -103,14 +103,9 @@ describe('TableView', () => {
     mockHabits = [{ _id: 'habit_1' }]
     render(<TableView dayCount={7} />)
 
-    // We expect 7 column headers in the table.
-    // They have uppercase labels like "MON", "TUE".
-    // Also "STATS" is there.
-    expect(screen.getByText('STATS')).toBeInTheDocument()
-    // It's hard to precisely count the text nodes, but we can verify there are 7 day divs in TableHeader.
-    // They share a flex container. We can check by rendering TableView with dayCount.
-    // Or we can mock the Date and count the distinct days.
-    // We can also query the TableHeader directly.
+    // STATS column is hidden by default (showStatsInTable defaults to false)
+    expect(screen.queryByText('STATS')).not.toBeInTheDocument()
+    // Day columns are rendered in the table header
   })
 
   it('boolean cell increments on click', async () => {
