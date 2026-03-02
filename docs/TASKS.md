@@ -86,12 +86,12 @@ This document tracks all implementation tasks for uyuk. Tasks are organized by p
 
 | #   | Task                                     | Priority | Size | Status | Notes                                      |
 | --- | ---------------------------------------- | -------- | ---- | ------ | ------------------------------------------ |
-| 3.1 | Create app shell layout component        | P0       | M    | [ ]    | Sidebar (desktop) + bottom tabs (mobile)   |
-| 3.2 | Implement sidebar navigation (desktop)   | P0       | M    | [ ]    | Table, Grids, Settings links, active state |
-| 3.3 | Implement bottom tab bar (mobile)        | P0       | M    | [ ]    | Table, Grids, Settings tabs                |
-| 3.4 | Set up route structure                   | P0       | S    | [ ]    | /, /table, /grids, /settings, /auth        |
-| 3.5 | Implement responsive breakpoint behavior | P1       | M    | [ ]    | Sidebar <-> bottom tabs transition         |
-| 3.6 | Style navigation per DESIGN.md           | P1       | M    | [ ]    | Colors, active indicators, dimensions      |
+| 3.1 | Create app shell layout component        | P0       | M    | [x]    | Sidebar (desktop) + bottom tabs (mobile)   |
+| 3.2 | Implement sidebar navigation (desktop)   | P0       | M    | [x]    | Table, Grids, Settings links, active state |
+| 3.3 | Implement bottom tab bar (mobile)        | P0       | M    | [x]    | Table, Grids, Settings tabs                |
+| 3.4 | Set up route structure                   | P0       | S    | [x]    | /, /table, /grids, /settings, /auth        |
+| 3.5 | Implement responsive breakpoint behavior | P1       | M    | [x]    | Sidebar <-> bottom tabs transition         |
+| 3.6 | Style navigation per DESIGN.md           | P1       | M    | [x]    | Colors, active indicators, dimensions      |
 
 ---
 
@@ -217,14 +217,14 @@ These are documented for planning but NOT part of the initial build.
 | 0. Scaffolding | 12     | 0      | 0           | 0       |
 | 1. Auth        | 6      | 6      | 0           | 0       |
 | 2. Data Layer  | 17     | 17     | 0           | 0       |
-| 3. App Shell   | 6      | 0      | 0           | 0       |
+| 3. App Shell   | 6      | 6      | 0           | 0       |
 | 4. Habit CRUD  | 9      | 0      | 0           | 0       |
 | 5. Table View  | 11     | 0      | 0           | 0       |
 | 6. Grids View  | 10     | 0      | 0           | 0       |
 | 7. Settings    | 8      | 0      | 0           | 0       |
 | 8. Polish      | 10     | 0      | 0           | 0       |
 | 9. CI/CD       | 6      | 0      | 0           | 0       |
-| **Total v1**   | **95** | **23** | **0**       | **0**   |
+| **Total v1**   | **95** | **29** | **0**       | **0**   |
 | 10. Future     | 10     | 0      | 0           | 0       |
 
 ## Dependencies

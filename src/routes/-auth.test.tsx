@@ -1,3 +1,4 @@
+import type React from 'react'
 import { render, screen, act } from '@testing-library/react'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
@@ -16,6 +17,9 @@ vi.mock('@tanstack/react-router', () => ({
   createFileRoute: () => () => ({}),
   Outlet: () => <div data-testid="outlet" />,
   useNavigate: () => mockNavigate,
+  useRouterState: () => ({ location: { pathname: '/table' } }),
+  Link: ({ children, to, className }: { children: React.ReactNode; to: string; className?: string }) =>
+    <a href={to} className={className}>{children}</a>,
 }))
 
 import { AuthenticatedLayout } from './_authenticated'

@@ -1,3 +1,4 @@
+import { AppShell } from '../components/layout/AppShell'
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 import { useNavigate } from '@tanstack/react-router'
 import { useConvexAuth } from 'convex/react'
@@ -29,5 +30,9 @@ export function AuthenticatedLayout() {
     return null
   }
 
-  return <Outlet />
+  return (
+    <AppShell>
+      <Outlet />
+    </AppShell>
+  )
 }
