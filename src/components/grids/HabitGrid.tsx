@@ -81,6 +81,8 @@ export function HabitGrid({
               value={cell.value}
               target={cell.target}
               color={color}
+              habitName={name}
+              dateStr={cell.dateStr}
             />
           )
         })}

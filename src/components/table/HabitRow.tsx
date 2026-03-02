@@ -11,7 +11,7 @@ export interface HabitRowProps {
   habit: Doc<'habits'>
   dates: { dateStr: string; isToday: boolean }[]
   completionsByDate: Record<string, number> // Map of date string to value
-  onUpdateCompletion: (date: string, value: number) => void
+  onUpdateCompletion: (date: string, value: number) => Promise<void> | void
 }
 
 export function HabitRow({
@@ -89,6 +89,7 @@ export function HabitRow({
               target={habit.target}
               habitType={habit.type}
               habitColor={habit.color}
+              habitName={habit.name}
               onUpdate={(newValue) => onUpdateCompletion(dateStr, newValue)}
             />
           )
