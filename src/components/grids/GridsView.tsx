@@ -17,39 +17,42 @@ export function GridsView() {
   const settings = useQuery(api.users.settings)
   const habits = useQuery(api.habits.list)
 
-  const { dates, startDate, endDate, startOffset } = useMemo(() => {
+  const { dates, startDate, endDate } = useMemo(() => {
     const today = new Date()
     today.setHours(0, 0, 0, 0)
 
-    // We want 98 days (14 weeks)
-    const daysCount = 98
-    const datesArr: { dateStr: string; dateObj: Date }[] = []
+    const weekStart = settings?.weekStartDay ?? 'monday'
 
-    for (let i = daysCount - 1; i >= 0; i--) {
-      const d = new Date(today.getTime() - i * 86400000)
-      datesArr.push({
-        dateStr: formatDate(d),
-        dateObj: d,
-      })
+    // Determine what weekday today is (0=Sun…6=Sat), adjusted for week start
+    let todayDow = today.getDay()
+    if (weekStart === 'monday') {
+      todayDow = todayDow === 0 ? 6 : todayDow - 1
     }
 
-    // Offset based on first day of our 98-day window
-    const firstDay = datesArr[0]!.dateObj
-    const weekStart = settings?.weekStartDay ?? 'monday'
-    let offset = firstDay.getDay()
-    if (weekStart === 'monday') {
-      offset = offset - 1
-      if (offset === -1) offset = 6
-    } else {
-      // Sunday start
-      // getDay() already returns 0 for Sunday
+    // Today is in row (todayDow) of the last column (col 13, 0-indexed).
+    // So the grid starts 13 full weeks + todayDow days ago = 13*7 + todayDow days ago.
+    // Total cells = 14 * 7 = 98, always a perfect rectangle.
+    const totalDays = 14 * 7 // 98
+    const daysBack = 13 * 7 + todayDow // days from grid-start to today
+
+    const datesArr: { dateStr: string; dateObj: Date }[] = []
+    for (let i = daysBack; i >= 0; i--) {
+      const d = new Date(today.getTime() - i * 86400000)
+      datesArr.push({ dateStr: formatDate(d), dateObj: d })
+    }
+
+    // Pad future days to complete the rectangle (should be 0 since today ends at row todayDow)
+    // Actually: daysBack + 1 days total. We need totalDays. Pad with future dates if needed.
+    let cursor = new Date(today.getTime() + 86400000)
+    while (datesArr.length < totalDays) {
+      datesArr.push({ dateStr: formatDate(cursor), dateObj: new Date(cursor) })
+      cursor = new Date(cursor.getTime() + 86400000)
     }
 
     return {
       dates: datesArr,
       startDate: datesArr[0]?.dateStr ?? '',
       endDate: datesArr[datesArr.length - 1]?.dateStr ?? '',
-      startOffset: offset,
     }
   }, [settings?.weekStartDay])
 
@@ -104,27 +107,17 @@ export function GridsView() {
     )
   }
 
-  const allHabitsCells: (CellData | null)[] = []
-  for (let i = 0; i < startOffset; i++) {
-    allHabitsCells.push(null)
-  }
-
-  for (const { dateStr } of dates) {
+  // Build allHabits cells — no offset nulls needed, pure 98-day rectangle
+  const allHabitsCells: CellData[] = dates.map(({ dateStr }) => {
     let value = 0
     let target = 0
-
     for (const habit of habits) {
       target += habit.target
       const val = completionsMap[habit._id]?.[dateStr] ?? 0
       value += Math.min(val, habit.target)
     }
-
-    allHabitsCells.push({
-      dateStr,
-      value,
-      target,
-    })
-  }
+    return { dateStr, value, target }
+  })
 
   return (
     <div
@@ -137,23 +130,15 @@ export function GridsView() {
           color="#ededed"
           cells={allHabitsCells}
           stats={null}
-          weekStart={
-            (settings?.weekStartDay as 'monday' | 'sunday') ?? 'monday'
-          }
+          weekStart={(settings?.weekStartDay as 'monday' | 'sunday') ?? 'monday'}
           isAllHabits={true}
         />
         {habits.map((habit) => {
-          const cells: (CellData | null)[] = []
-          for (let i = 0; i < startOffset; i++) {
-            cells.push(null)
-          }
-          for (const { dateStr } of dates) {
-            cells.push({
-              dateStr,
-              value: completionsMap[habit._id]?.[dateStr] ?? 0,
-              target: habit.target,
-            })
-          }
+          const cells: CellData[] = dates.map(({ dateStr }) => ({
+            dateStr,
+            value: completionsMap[habit._id]?.[dateStr] ?? 0,
+            target: habit.target,
+          }))
 
           return (
             <HabitGrid
