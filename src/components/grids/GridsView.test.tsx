@@ -98,8 +98,10 @@ describe('GridsView', () => {
 
     // We look at the first group of headers (from All Habits grid)
     const allHeaders = container.querySelectorAll('.text-\\[10px\\]')
-    const first7 = Array.from(allHeaders).slice(0, 7).map(el => el.textContent)
-    
+    const first7 = Array.from(allHeaders)
+      .slice(0, 7)
+      .map((el) => el.textContent)
+
     expect(first7).toEqual(['M', 'T', 'W', 'T', 'F', 'S', 'S'])
   })
 
@@ -109,8 +111,10 @@ describe('GridsView', () => {
     const { container } = render(<GridsView />)
 
     const allHeaders = container.querySelectorAll('.text-\\[10px\\]')
-    const first7 = Array.from(allHeaders).slice(0, 7).map(el => el.textContent)
-    
+    const first7 = Array.from(allHeaders)
+      .slice(0, 7)
+      .map((el) => el.textContent)
+
     expect(first7).toEqual(['S', 'M', 'T', 'W', 'T', 'F', 'S'])
   })
 })

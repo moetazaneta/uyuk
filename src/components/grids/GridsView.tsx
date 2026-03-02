@@ -17,38 +17,45 @@ export function GridsView() {
   const settings = useQuery(api.users.settings)
   const habits = useQuery(api.habits.list)
 
-  const { startDate, endDate, daysInMonth, startOffset, monthLabel, year, month } =
-    useMemo(() => {
-      const today = new Date()
-      const y = today.getFullYear()
-      const m = today.getMonth()
+  const {
+    startDate,
+    endDate,
+    daysInMonth,
+    startOffset,
+    monthLabel,
+    year,
+    month,
+  } = useMemo(() => {
+    const today = new Date()
+    const y = today.getFullYear()
+    const m = today.getMonth()
 
-      const firstDay = new Date(y, m, 1)
-      const lastDay = new Date(y, m + 1, 0)
+    const firstDay = new Date(y, m, 1)
+    const lastDay = new Date(y, m + 1, 0)
 
-      const weekStart = settings?.weekStartDay ?? 'monday'
-      let offset = firstDay.getDay()
-      if (weekStart === 'monday') {
-        offset = offset - 1
-        if (offset === -1) offset = 6
-      }
+    const weekStart = settings?.weekStartDay ?? 'monday'
+    let offset = firstDay.getDay()
+    if (weekStart === 'monday') {
+      offset = offset - 1
+      if (offset === -1) offset = 6
+    }
 
-      const sDate = formatDate(firstDay)
-      const eDate = formatDate(lastDay)
+    const sDate = formatDate(firstDay)
+    const eDate = formatDate(lastDay)
 
-      const monthName = firstDay.toLocaleString('en-US', { month: 'long' })
-      const mLabel = `${monthName} ${y}`
+    const monthName = firstDay.toLocaleString('en-US', { month: 'long' })
+    const mLabel = `${monthName} ${y}`
 
-      return {
-        startDate: sDate,
-        endDate: eDate,
-        daysInMonth: lastDay.getDate(),
-        startOffset: offset,
-        monthLabel: mLabel,
-        year: y,
-        month: m,
-      }
-    }, [settings?.weekStartDay])
+    return {
+      startDate: sDate,
+      endDate: eDate,
+      daysInMonth: lastDay.getDate(),
+      startOffset: offset,
+      monthLabel: mLabel,
+      year: y,
+      month: m,
+    }
+  }, [settings?.weekStartDay])
 
   const completions = useQuery(
     api.completions.byDateRange,
@@ -72,7 +79,10 @@ export function GridsView() {
     settings === undefined
   ) {
     return (
-      <div className="flex-1 overflow-auto bg-bg p-4 md:p-6" data-testid="grids-loading">
+      <div
+        className="flex-1 overflow-auto bg-bg p-4 md:p-6"
+        data-testid="grids-loading"
+      >
         <h1 className="text-xl md:text-2xl font-bold mb-4 font-mono text-text-primary">
           grids
         </h1>
@@ -130,7 +140,10 @@ export function GridsView() {
   }
 
   return (
-    <div className="flex-1 overflow-auto bg-bg p-4 md:p-6" data-testid="grids-view">
+    <div
+      className="flex-1 overflow-auto bg-bg p-4 md:p-6"
+      data-testid="grids-view"
+    >
       <h1 className="text-xl md:text-2xl font-bold mb-4 font-mono text-text-primary">
         grids
       </h1>
@@ -141,7 +154,9 @@ export function GridsView() {
           cells={allHabitsCells}
           monthLabel={monthLabel}
           stats={null}
-          weekStart={(settings?.weekStartDay as 'monday' | 'sunday') ?? 'monday'}
+          weekStart={
+            (settings?.weekStartDay as 'monday' | 'sunday') ?? 'monday'
+          }
         />
         {habits.map((habit) => {
           const cells: (CellData | null)[] = []
@@ -166,7 +181,9 @@ export function GridsView() {
               color={habit.color}
               cells={cells}
               monthLabel={monthLabel}
-              weekStart={(settings?.weekStartDay as 'monday' | 'sunday') ?? 'monday'}
+              weekStart={
+                (settings?.weekStartDay as 'monday' | 'sunday') ?? 'monday'
+              }
             />
           )
         })}
