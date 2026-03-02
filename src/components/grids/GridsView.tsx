@@ -17,43 +17,39 @@ export function GridsView() {
   const settings = useQuery(api.users.settings)
   const habits = useQuery(api.habits.list)
 
-  const {
-    startDate,
-    endDate,
-    daysInMonth,
-    startOffset,
-    monthLabel,
-    year,
-    month,
-  } = useMemo(() => {
+  const { dates, startDate, endDate, startOffset } = useMemo(() => {
     const today = new Date()
-    const y = today.getFullYear()
-    const m = today.getMonth()
+    today.setHours(0, 0, 0, 0)
 
-    const firstDay = new Date(y, m, 1)
-    const lastDay = new Date(y, m + 1, 0)
+    // We want 98 days (14 weeks)
+    const daysCount = 98
+    const datesArr: { dateStr: string; dateObj: Date }[] = []
 
+    for (let i = daysCount - 1; i >= 0; i--) {
+      const d = new Date(today.getTime() - i * 86400000)
+      datesArr.push({
+        dateStr: formatDate(d),
+        dateObj: d,
+      })
+    }
+
+    // Offset based on first day of our 98-day window
+    const firstDay = datesArr[0]!.dateObj
     const weekStart = settings?.weekStartDay ?? 'monday'
     let offset = firstDay.getDay()
     if (weekStart === 'monday') {
       offset = offset - 1
       if (offset === -1) offset = 6
+    } else {
+      // Sunday start
+      // getDay() already returns 0 for Sunday
     }
 
-    const sDate = formatDate(firstDay)
-    const eDate = formatDate(lastDay)
-
-    const monthName = firstDay.toLocaleString('en-US', { month: 'long' })
-    const mLabel = `${monthName} ${y}`
-
     return {
-      startDate: sDate,
-      endDate: eDate,
-      daysInMonth: lastDay.getDate(),
+      dates: datesArr,
+      startDate: datesArr[0]?.dateStr ?? '',
+      endDate: datesArr[datesArr.length - 1]?.dateStr ?? '',
       startOffset: offset,
-      monthLabel: mLabel,
-      year: y,
-      month: m,
     }
   }, [settings?.weekStartDay])
 
@@ -83,9 +79,6 @@ export function GridsView() {
         className="flex-1 overflow-auto bg-bg p-4 md:p-6"
         data-testid="grids-loading"
       >
-        <h1 className="text-xl md:text-2xl font-bold mb-4 font-mono text-text-primary">
-          grids
-        </h1>
         <div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4">
           {[1, 2, 3].map((i) => (
             <div key={i} className="bg-bg-elevated p-4 h-48 animate-pulse" />
@@ -98,16 +91,14 @@ export function GridsView() {
   if (habits.length === 0) {
     return (
       <div className="flex-1 overflow-auto bg-bg p-4 md:p-6">
-        <h1 className="text-xl md:text-2xl font-bold mb-4 font-mono text-text-primary">
-          grids
-        </h1>
-        <div className="flex-1 flex items-center justify-center text-text-secondary h-[50vh]">
-          <div className="text-center font-mono text-sm">
-            No habits yet.{' '}
-            <Link to="/habits/new" className="text-focus hover:underline">
-              Create your first habit →
-            </Link>
-          </div>
+        <div className="flex-1 flex flex-col items-center justify-center text-text-secondary h-[50vh]">
+          <div className="text-center font-mono text-sm">No habits yet.</div>
+          <Link
+            to="/habits/new"
+            className="text-sm font-sans text-text-secondary hover:text-text-primary transition-colors border border-divider px-4 py-2 mt-4"
+          >
+            + new habit
+          </Link>
         </div>
       </div>
     )
@@ -118,24 +109,20 @@ export function GridsView() {
     allHabitsCells.push(null)
   }
 
-  const allHabitsDateValues: Record<string, { value: number; target: number }> =
-    {}
-
-  for (let d = 1; d <= daysInMonth; d++) {
-    const dateObj = new Date(year, month, d)
-    const dateStr = formatDate(dateObj)
-    allHabitsDateValues[dateStr] = { value: 0, target: 0 }
+  for (const { dateStr } of dates) {
+    let value = 0
+    let target = 0
 
     for (const habit of habits) {
-      allHabitsDateValues[dateStr]!.target += habit.target
+      target += habit.target
       const val = completionsMap[habit._id]?.[dateStr] ?? 0
-      allHabitsDateValues[dateStr]!.value += Math.min(val, habit.target)
+      value += Math.min(val, habit.target)
     }
 
     allHabitsCells.push({
       dateStr,
-      value: allHabitsDateValues[dateStr]!.value,
-      target: allHabitsDateValues[dateStr]!.target,
+      value,
+      target,
     })
   }
 
@@ -144,28 +131,23 @@ export function GridsView() {
       className="flex-1 overflow-auto bg-bg p-4 md:p-6"
       data-testid="grids-view"
     >
-      <h1 className="text-xl md:text-2xl font-bold mb-4 font-mono text-text-primary">
-        grids
-      </h1>
       <div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4 pb-20">
         <HabitGrid
           name="All Habits"
           color="#ededed"
           cells={allHabitsCells}
-          monthLabel={monthLabel}
           stats={null}
           weekStart={
             (settings?.weekStartDay as 'monday' | 'sunday') ?? 'monday'
           }
+          isAllHabits={true}
         />
         {habits.map((habit) => {
           const cells: (CellData | null)[] = []
           for (let i = 0; i < startOffset; i++) {
             cells.push(null)
           }
-          for (let d = 1; d <= daysInMonth; d++) {
-            const dateObj = new Date(year, month, d)
-            const dateStr = formatDate(dateObj)
+          for (const { dateStr } of dates) {
             cells.push({
               dateStr,
               value: completionsMap[habit._id]?.[dateStr] ?? 0,
@@ -178,12 +160,20 @@ export function GridsView() {
               key={habit._id}
               habitId={habit._id}
               name={habit.name}
+              icon={
+                habit.iconType && habit.iconValue
+                  ? {
+                      type: habit.iconType as 'emoji' | 'icon',
+                      value: habit.iconValue,
+                    }
+                  : undefined
+              }
               color={habit.color}
               cells={cells}
-              monthLabel={monthLabel}
               weekStart={
                 (settings?.weekStartDay as 'monday' | 'sunday') ?? 'monday'
               }
+              isAllHabits={false}
             />
           )
         })}

@@ -195,7 +195,7 @@ export function HabitForm({
             onClick={onCancel}
             className="h-10 px-6 bg-bg-subtle text-text-primary hover:bg-bg-elevated transition-colors flex-1"
           >
-            Cancel
+            cancel
           </button>
         )}
         <button
@@ -204,10 +204,10 @@ export function HabitForm({
           className="h-10 px-6 bg-[#ededed] text-[#0a0a0a] hover:bg-[#d4d4d4] transition-colors flex-1 disabled:opacity-50"
         >
           {isSubmitting
-            ? 'Saving...'
+            ? 'saving...'
             : isEdit
-              ? 'Save Changes'
-              : 'Create Habit'}
+              ? 'save changes'
+              : 'create habit'}
         </button>
       </div>
     </form>

@@ -6,6 +6,7 @@ export interface GridCellProps {
   color: string
   habitName: string
   dateStr: string
+  className?: string
 }
 
 export function GridCell({
@@ -14,8 +15,8 @@ export function GridCell({
   color,
   habitName,
   dateStr,
+  className = '',
 }: GridCellProps) {
-  // Intensity is determined by completion percentage.
   const intensity = useMemo(() => {
     if (value === 0 || target === 0) return 0
     const percentage = (value / target) * 100
@@ -26,7 +27,6 @@ export function GridCell({
     return 1 // 76% to 100%
   }, [value, target])
 
-  // Format date as "Month D, YYYY"
   const [year, month, day] = (dateStr ?? '').split('-').map(Number)
   const dateObj = new Date(year, month - 1, day)
   const formattedDate = new Intl.DateTimeFormat('en-US', {
@@ -44,7 +44,7 @@ export function GridCell({
     <div
       role="img"
       aria-label={ariaLabel}
-      className="w-3 h-3 md:w-3.5 md:h-3.5 bg-bg-subtle relative overflow-hidden flex-shrink-0"
+      className={`bg-bg-subtle relative overflow-hidden flex-shrink-0 ${className}`}
     >
       {intensity > 0 && (
         <div

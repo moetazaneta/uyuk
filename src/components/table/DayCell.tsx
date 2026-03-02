@@ -38,11 +38,7 @@ export function DayCell({
 
   // Determine base background
   const isZero = displayValue === 0
-  const baseBg = isToday
-    ? 'bg-bg-subtle border-b-2 border-focus'
-    : isZero
-      ? 'bg-bg-subtle'
-      : 'bg-bg'
+  const baseBg = isToday || isZero ? 'bg-bg-subtle' : 'bg-bg'
 
   // Use habit color with opacity if partial, or full if 100%
   // But actually, the requirements say:
@@ -59,7 +55,7 @@ export function DayCell({
 
   const handleTap = async () => {
     if (habitType === 'boolean') {
-      const newValue = displayValue + 1
+      const newValue = displayValue >= target ? 0 : displayValue + 1
       setOptimisticValue(newValue)
       setError(null)
       setIsAnimating(true)
@@ -107,7 +103,7 @@ export function DayCell({
       <button
         type="button"
         aria-label={ariaLabel}
-        className={`relative flex items-end justify-center w-7 h-7 min-w-[36px] min-h-[36px] md:min-w-0 md:min-h-0 md:w-7 md:h-7 lg:w-8 lg:h-8 cursor-pointer overflow-hidden transition-transform duration-100 ${
+        className={`relative flex items-end justify-center w-9 h-9 md:w-7 md:h-7 lg:w-8 lg:h-8 cursor-pointer overflow-hidden transition-transform duration-100 ${
           isAnimating ? 'scale-105' : ''
         } ${baseBg}`}
         onClick={handleTap}

@@ -14,7 +14,7 @@ import {
 } from '@dnd-kit/sortable'
 import { Link } from '@tanstack/react-router'
 import { useMutation, useQuery } from 'convex/react'
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { api } from '~/../convex/_generated/api'
 
@@ -40,13 +40,38 @@ export interface TableViewProps {
   dayCount?: number
 }
 
-export function TableView({ dayCount = 7 }: TableViewProps) {
+export function TableView({ dayCount: initialDayCount = 7 }: TableViewProps) {
+  const settings = useQuery(api.users.settings)
   const habits = useQuery(api.habits.list)
   const upsertCompletion = useMutation(api.completions.upsert)
   const reorder = useMutation(api.habits.reorder)
 
-  // Compute dates array (from today backwards)
-  // We want left-to-right to be oldest-to-newest, so reverse the backwards array.
+  // Local ordered state avoids dnd-kit snap-back teleport: we own the order,
+  // and only sync from server when it changes externally.
+  const [orderedHabits, setOrderedHabits] = useState<typeof habits>(undefined)
+
+  useEffect(() => {
+    if (habits !== undefined) setOrderedHabits(habits)
+  }, [habits])
+
+  const [windowWidth, setWindowWidth] = useState(
+    typeof window !== 'undefined' ? window.innerWidth : 1024,
+  )
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  const dayCount = useMemo(() => {
+    if (initialDayCount !== 7) return initialDayCount
+    if (windowWidth < 768) return settings?.mobileTableViewDayCount ?? 7 // mobile
+    if (windowWidth < 1024) return 14 // md
+    if (windowWidth < 1280) return 21 // lg
+    return 28 // xl/2xl
+  }, [windowWidth, initialDayCount, settings?.mobileTableViewDayCount])
+
   const dates = useMemo(() => {
     const today = new Date()
     today.setHours(0, 0, 0, 0)
@@ -73,7 +98,6 @@ export function TableView({ dayCount = 7 }: TableViewProps) {
     startDate && endDate ? { startDate, endDate } : 'skip',
   )
 
-  // O(1) lookup map: habitId -> date -> value
   const completionsMap = useMemo(() => {
     const map: Record<string, Record<string, number>> = {}
     if (completions) {
@@ -86,7 +110,9 @@ export function TableView({ dayCount = 7 }: TableViewProps) {
   }, [completions])
 
   const sensors = useSensors(
-    useSensor(PointerSensor),
+    useSensor(PointerSensor, {
+      activationConstraint: { distance: 5 },
+    }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
@@ -95,22 +121,24 @@ export function TableView({ dayCount = 7 }: TableViewProps) {
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event
 
-    if (over && active.id !== over.id && habits) {
-      const oldIndex = habits.findIndex((h) => h._id === active.id)
-      const newIndex = habits.findIndex((h) => h._id === over.id)
+    if (over && active.id !== over.id && orderedHabits) {
+      const oldIndex = orderedHabits.findIndex((h) => h._id === active.id)
+      const newIndex = orderedHabits.findIndex((h) => h._id === over.id)
 
       if (oldIndex !== -1 && newIndex !== -1) {
-        const newHabits = [...habits]
-        const [moved] = newHabits.splice(oldIndex, 1)
+        const next = [...orderedHabits]
+        const [moved] = next.splice(oldIndex, 1)
         if (moved) {
-          newHabits.splice(newIndex, 0, moved)
-          reorder({ ids: newHabits.map((h) => h._id) })
+          next.splice(newIndex, 0, moved)
+          // Update local state immediately — no visual snap-back
+          setOrderedHabits(next)
+          void reorder({ ids: next.map((h) => h._id) })
         }
       }
     }
   }
 
-  if (habits === undefined) {
+  if (orderedHabits === undefined) {
     return (
       <div className="flex-1 overflow-auto bg-bg" data-testid="table-loading">
         <TableHeader dates={dates} />
@@ -126,23 +154,24 @@ export function TableView({ dayCount = 7 }: TableViewProps) {
     )
   }
 
-  if (habits.length === 0) {
+  if (!orderedHabits || orderedHabits.length === 0) {
     return (
-      <div className="flex-1 flex items-center justify-center bg-bg text-text-secondary">
-        <div className="text-center font-mono text-sm">
-          No habits yet.{' '}
-          <Link to="/habits/new" className="text-focus hover:underline">
-            Create your first habit →
-          </Link>
-        </div>
+      <div className="flex-1 flex items-center justify-center bg-bg text-text-secondary flex-col">
+        <div className="text-center font-mono text-sm mb-4">No habits yet.</div>
+        <Link
+          to="/habits/new"
+          className="text-sm font-sans text-text-secondary hover:text-text-primary transition-colors border border-divider px-4 py-2"
+        >
+          + new habit
+        </Link>
       </div>
     )
   }
 
   return (
     <div className="flex-1 overflow-auto bg-bg" data-testid="table-view">
-      <div className="min-w-[600px]">
-        <TableHeader dates={dates} />
+      <div className="min-w-max">
+        <TableHeader dates={dates} showStats={settings?.showStatsInTable ?? false} />
 
         <DndContext
           sensors={sensors}
@@ -150,11 +179,11 @@ export function TableView({ dayCount = 7 }: TableViewProps) {
           onDragEnd={handleDragEnd}
         >
           <SortableContext
-            items={habits.map((h) => h._id)}
+            items={orderedHabits.map((h) => h._id)}
             strategy={verticalListSortingStrategy}
           >
             <div className="flex flex-col">
-              {habits.map((habit) => {
+              {orderedHabits.map((habit) => {
                 const habitCompletions = completionsMap[habit._id] ?? {}
 
                 return (
@@ -163,6 +192,7 @@ export function TableView({ dayCount = 7 }: TableViewProps) {
                     habit={habit}
                     dates={dates}
                     completionsByDate={habitCompletions}
+                    showStats={settings?.showStatsInTable ?? false}
                     onUpdateCompletion={async (dateStr, value) => {
                       await upsertCompletion({
                         habitId: habit._id,
@@ -176,6 +206,15 @@ export function TableView({ dayCount = 7 }: TableViewProps) {
             </div>
           </SortableContext>
         </DndContext>
+
+        <div className="pt-2 pb-4 px-2">
+          <Link
+            to="/habits/new"
+            className="text-sm font-sans text-text-secondary hover:text-text-primary transition-colors inline-block"
+          >
+            + new habit
+          </Link>
+        </div>
       </div>
     </div>
   )
