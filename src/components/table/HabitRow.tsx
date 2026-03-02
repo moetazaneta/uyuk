@@ -64,7 +64,7 @@ export function HabitRow({
         ⠿
       </div>
 
-      <div className="w-5 flex-shrink-0 flex items-center justify-center text-sm md:mr-2 pl-2">
+      <div className="w-5 flex-shrink-0 flex items-center justify-center text-sm mr-1">
         {icon}
       </div>
 

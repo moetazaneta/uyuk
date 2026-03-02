@@ -5,6 +5,26 @@ import { v } from 'convex/values'
 export default defineSchema({
   ...authTables,
 
+  // Override users table to add app-specific settings fields
+  users: defineTable({
+    // Auth fields (from authTables.users)
+    name: v.optional(v.string()),
+    image: v.optional(v.string()),
+    email: v.optional(v.string()),
+    emailVerificationTime: v.optional(v.number()),
+    phone: v.optional(v.string()),
+    phoneVerificationTime: v.optional(v.number()),
+    isAnonymous: v.optional(v.boolean()),
+    // App settings fields
+    timezone: v.optional(v.string()),
+    weekStartDay: v.optional(v.union(v.literal('monday'), v.literal('sunday'))),
+    tableViewDayCount: v.optional(v.number()),
+    showStatsInTable: v.optional(v.boolean()),
+    mobileTableViewDayCount: v.optional(v.number()),
+  })
+    .index('email', ['email'])
+    .index('phone', ['phone']),
+
   habits: defineTable({
     userId: v.id('users'),
     name: v.string(),

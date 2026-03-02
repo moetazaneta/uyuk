@@ -18,20 +18,12 @@ export const settings = query({
     }
 
     return {
-      name:
-        ((user as Record<string, unknown>).name as string | undefined) ?? '',
-      timezone:
-        ((user as Record<string, unknown>).timezone as string) ??
-        'America/Los_Angeles',
-      weekStartDay: (user as Record<string, unknown>).weekStartDay ?? 'monday',
-      tableViewDayCount:
-        (user as Record<string, unknown>).tableViewDayCount ?? 7,
-      showStatsInTable:
-        ((user as Record<string, unknown>).showStatsInTable as boolean) ??
-        false,
-      mobileTableViewDayCount:
-        ((user as Record<string, unknown>).mobileTableViewDayCount as number) ??
-        7,
+      name: user.name ?? '',
+      timezone: user.timezone ?? 'America/Los_Angeles',
+      weekStartDay: user.weekStartDay ?? 'monday',
+      tableViewDayCount: user.tableViewDayCount ?? 7,
+      showStatsInTable: user.showStatsInTable ?? false,
+      mobileTableViewDayCount: user.mobileTableViewDayCount ?? 7,
     }
   },
 })
@@ -56,7 +48,13 @@ export const updateSettings = mutation({
       throw new ConvexError('USER_NOT_FOUND')
     }
 
-    const patch: Record<string, unknown> = {}
+    const patch: {
+      timezone?: string
+      weekStartDay?: 'monday' | 'sunday'
+      tableViewDayCount?: number
+      showStatsInTable?: boolean
+      mobileTableViewDayCount?: number
+    } = {}
     if (args.timezone !== undefined) {
       patch.timezone = args.timezone
     }
