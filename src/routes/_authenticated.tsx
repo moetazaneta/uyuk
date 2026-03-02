@@ -3,6 +3,8 @@ import { useNavigate } from '@tanstack/react-router'
 import { useConvexAuth } from 'convex/react'
 import { useEffect } from 'react'
 
+import { AppShell } from '../components/layout/AppShell'
+
 export const Route = createFileRoute('/_authenticated')({
   component: AuthenticatedLayout,
 })
@@ -29,5 +31,9 @@ export function AuthenticatedLayout() {
     return null
   }
 
-  return <Outlet />
+  return (
+    <AppShell>
+      <Outlet />
+    </AppShell>
+  )
 }

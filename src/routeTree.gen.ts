@@ -12,6 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedTableRouteImport } from './routes/_authenticated/table'
+import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as AuthenticatedGridsRouteImport } from './routes/_authenticated/grids'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
@@ -27,27 +30,58 @@ const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedTableRoute = AuthenticatedTableRouteImport.update({
+  id: '/table',
+  path: '/table',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedGridsRoute = AuthenticatedGridsRouteImport.update({
+  id: '/grids',
+  path: '/grids',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
   '/auth': typeof AuthRoute
+  '/grids': typeof AuthenticatedGridsRoute
+  '/settings': typeof AuthenticatedSettingsRoute
+  '/table': typeof AuthenticatedTableRoute
 }
 export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
+  '/grids': typeof AuthenticatedGridsRoute
+  '/settings': typeof AuthenticatedSettingsRoute
+  '/table': typeof AuthenticatedTableRoute
   '/': typeof AuthenticatedIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/grids': typeof AuthenticatedGridsRoute
+  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/_authenticated/table': typeof AuthenticatedTableRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth'
+  fullPaths: '/' | '/auth' | '/grids' | '/settings' | '/table'
   fileRoutesByTo: FileRoutesByTo
-  to: '/auth' | '/'
-  id: '__root__' | '/_authenticated' | '/auth' | '/_authenticated/'
+  to: '/auth' | '/grids' | '/settings' | '/table' | '/'
+  id:
+    | '__root__'
+    | '/_authenticated'
+    | '/auth'
+    | '/_authenticated/grids'
+    | '/_authenticated/settings'
+    | '/_authenticated/table'
+    | '/_authenticated/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -78,14 +112,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedIndexRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/table': {
+      id: '/_authenticated/table'
+      path: '/table'
+      fullPath: '/table'
+      preLoaderRoute: typeof AuthenticatedTableRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/settings': {
+      id: '/_authenticated/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/grids': {
+      id: '/_authenticated/grids'
+      path: '/grids'
+      fullPath: '/grids'
+      preLoaderRoute: typeof AuthenticatedGridsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
 interface AuthenticatedRouteChildren {
+  AuthenticatedGridsRoute: typeof AuthenticatedGridsRoute
+  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
+  AuthenticatedTableRoute: typeof AuthenticatedTableRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedGridsRoute: AuthenticatedGridsRoute,
+  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
+  AuthenticatedTableRoute: AuthenticatedTableRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
 }
 
