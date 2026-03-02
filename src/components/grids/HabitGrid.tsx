@@ -15,7 +15,7 @@ export interface HabitGridProps {
   name: string
   icon?: { type: 'emoji' | 'icon'; value: string }
   color: string
-  cells: (CellData | null)[]
+  cells: CellData[]
   habitId?: Id<'habits'>
   stats?: { currentStreak: number; completionRate: number } | null
   weekStart?: 'monday' | 'sunday'
@@ -43,10 +43,9 @@ export function HabitGrid({
       ? ['M', 'T', 'W', 'T', 'F', 'S', 'S']
       : ['S', 'M', 'T', 'W', 'T', 'F', 'S']
 
-  // Bigger boxes for all habits, and 2x overall increase
-  const cellWidth = isAllHabits ? 'w-10 sm:w-12 md:w-14' : 'w-6 md:w-7'
-  const cellHeight = isAllHabits ? 'h-10 sm:h-12 md:h-14' : 'h-6 md:h-7'
-  const gap = isAllHabits ? 'gap-2' : 'gap-1'
+  // Container-query based cell sizing — fills the card width across 14 columns
+  const cellSize = 'w-[calc((100cqw-2.5rem)/14)] h-[calc((100cqw-2.5rem)/14)]'
+  const gap = 'gap-0.5'
 
   const renderedIcon = icon ? (
     icon.type === 'emoji' ? (
@@ -57,7 +56,7 @@ export function HabitGrid({
         height="16"
         viewBox="0 0 24 24"
         fill="currentColor"
-        className="inline-block mr-1"
+        className="inline-block"
       >
         <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
       </svg>
@@ -66,7 +65,7 @@ export function HabitGrid({
 
   return (
     <div
-      className={`bg-bg-elevated p-4 flex flex-col gap-4 ${isAllHabits ? 'col-span-full xl:col-span-2 2xl:col-span-3' : ''}`}
+      className={`@container bg-bg-elevated p-4 flex flex-col gap-4 ${isAllHabits ? 'col-span-full xl:col-span-2 2xl:col-span-3' : ''}`}
     >
       <div
         className={`flex justify-between items-center font-mono ${isAllHabits ? 'text-lg' : 'text-sm'}`}
@@ -83,37 +82,27 @@ export function HabitGrid({
       </div>
 
       <div
-        className={`grid grid-flow-col grid-rows-7 w-fit ${gap} overflow-x-auto pb-2`}
+        className={`grid grid-flow-col grid-rows-7 w-full ${gap} pb-2`}
       >
         {daysOfWeek.map((day, i) => (
           <div
             key={`header-${i}`}
-            className={`text-[10px] text-text-secondary text-right pr-2 font-mono flex items-center justify-end ${cellHeight}`}
+            className={`text-[10px] text-text-secondary text-right pr-2 font-mono flex items-center justify-end ${cellSize}`}
           >
             {day}
           </div>
         ))}
-        {cells.map((cell, i) => {
-          if (!cell) {
-            return (
-              <div
-                key={`pad-${i}`}
-                className={`${cellWidth} ${cellHeight} flex-shrink-0`}
-              />
-            )
-          }
-          return (
-            <GridCell
-              key={cell.dateStr}
-              value={cell.value}
-              target={cell.target}
-              color={color}
-              habitName={name}
-              dateStr={cell.dateStr}
-              className={`${cellWidth} ${cellHeight}`}
-            />
-          )
-        })}
+        {cells.map((cell) => (
+          <GridCell
+            key={cell.dateStr}
+            value={cell.value}
+            target={cell.target}
+            color={color}
+            habitName={name}
+            dateStr={cell.dateStr}
+            className={cellSize}
+          />
+        ))}
       </div>
     </div>
   )
