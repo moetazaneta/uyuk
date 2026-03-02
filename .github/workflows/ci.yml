@@ -52,3 +52,9 @@ jobs:
         run: pnpm build
         env:
           VITE_CONVEX_URL: ${{ secrets.VITE_CONVEX_URL }}
+
+      - name: Deploy Convex to prod
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: pnpm convex deploy --yes
+        env:
+          CONVEX_DEPLOY_KEY: ${{ secrets.CONVEX_DEPLOY_KEY }}
