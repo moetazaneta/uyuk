@@ -76,11 +76,13 @@ export function HabitGrid({
             )
           }
           return (
-            <GridCell
+<GridCell
               key={cell.dateStr}
               value={cell.value}
               target={cell.target}
               color={color}
+              habitName={name}
+              dateStr={cell.dateStr}
             />
           )
         })}

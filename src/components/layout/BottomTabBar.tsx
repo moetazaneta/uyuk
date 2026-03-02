@@ -20,7 +20,8 @@ export function BottomTabBar() {
           <Link
             key={item.path}
             to={item.path}
-            className={`flex flex-1 flex-col items-center justify-center gap-1 transition-colors ${
+            aria-current={isActive ? 'page' : undefined}
+            className={`flex flex-1 flex-col items-center justify-center gap-1 transition-colors min-h-[56px] min-w-[56px] ${
               isActive ? 'text-text-primary' : 'text-text-disabled'
             }`}
           >
