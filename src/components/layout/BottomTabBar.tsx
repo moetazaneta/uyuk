@@ -13,7 +13,7 @@ export function BottomTabBar() {
   const pathname = routerState.location.pathname
 
   return (
-    <div className="flex h-[56px] w-full bg-bg-elevated">
+    <div className="flex h-[calc(56px+env(safe-area-inset-bottom))] w-full bg-bg-elevated pb-[env(safe-area-inset-bottom)]">
       {navItems.map((item) => {
         const isActive = pathname.startsWith(item.path)
         return (
