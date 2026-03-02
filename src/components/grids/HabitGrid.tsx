@@ -81,9 +81,7 @@ export function HabitGrid({
         )}
       </div>
 
-      <div
-        className={`grid grid-flow-col grid-rows-7 w-full ${gap} pb-2`}
-      >
+      <div className={`grid grid-flow-col grid-rows-7 w-full ${gap} pb-2`}>
         {daysOfWeek.map((day, i) => (
           <div
             key={`header-${i}`}
