@@ -5,4 +5,3 @@ import { SettingsView } from '~/components/settings/SettingsView'
 export const Route = createFileRoute('/_authenticated/settings')({
   component: SettingsView,
 })
-

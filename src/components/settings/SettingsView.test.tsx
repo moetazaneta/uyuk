@@ -19,7 +19,8 @@ vi.mock('@convex-dev/auth/react', () => ({
 vi.mock('convex/react', () => ({
   useMutation: (apiFn: string) => {
     if (apiFn === 'mock_api_users_updateSettings') return mockUpdateSettings
-    if (apiFn === 'mock_api_users_updateDisplayName') return mockUpdateDisplayName
+    if (apiFn === 'mock_api_users_updateDisplayName')
+      return mockUpdateDisplayName
     if (apiFn === 'mock_api_habits_unarchive') return mockUnarchive
     if (apiFn === 'mock_api_habits_restore') return mockRestore
     return vi.fn()
@@ -61,7 +62,7 @@ describe('SettingsView', () => {
     }
     mockArchivedHabits = []
     mockDeletedHabits = []
-    
+
     // Mock window.confirm
     window.confirm = vi.fn(() => true)
   })
@@ -80,17 +81,19 @@ describe('SettingsView', () => {
     expect(screen.getByText('Sunday ▾')).toBeInTheDocument()
     expect(screen.getByText('no archived habits')).toBeInTheDocument()
     expect(screen.getByText('no deleted habits')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /sign out/i })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: /sign out/i }),
+    ).toBeInTheDocument()
   })
 
   it('week start toggle calls updateSettings', async () => {
     render(<SettingsView />)
-    
+
     const sundayBtn = screen.getByText('Sunday ▾')
     await act(async () => {
       fireEvent.click(sundayBtn)
     })
-    
+
     expect(mockUpdateSettings).toHaveBeenCalledWith({ weekStartDay: 'sunday' })
   })
 
@@ -112,14 +115,14 @@ describe('SettingsView', () => {
       },
     ]
     render(<SettingsView />)
-    
+
     expect(screen.getByText('Drink Water')).toBeInTheDocument()
     const unarchiveBtn = screen.getByRole('button', { name: /unarchive/i })
-    
+
     await act(async () => {
       fireEvent.click(unarchiveBtn)
     })
-    
+
     expect(mockUnarchive).toHaveBeenCalledWith({ id: 'habit_1' })
   })
 
@@ -135,14 +138,14 @@ describe('SettingsView', () => {
       },
     ]
     render(<SettingsView />)
-    
+
     expect(screen.getByText('Read Book')).toBeInTheDocument()
     const restoreBtn = screen.getByRole('button', { name: /restore/i })
-    
+
     await act(async () => {
       fireEvent.click(restoreBtn)
     })
-    
+
     expect(mockRestore).toHaveBeenCalledWith({ id: 'habit_2' })
   })
 })

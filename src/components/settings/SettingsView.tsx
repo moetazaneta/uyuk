@@ -98,7 +98,7 @@ export function SettingsView() {
           <h2 className="text-text-secondary uppercase tracking-widest text-xs border-b border-divider pb-1">
             preferences
           </h2>
-          
+
           <div className="flex flex-col gap-2">
             <div className="text-text-secondary">Week start</div>
             <div className="flex gap-2">
