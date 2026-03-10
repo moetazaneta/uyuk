@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
+import { fn } from 'storybook/test'
 
 import { NumericInput } from './NumericInput'
 
@@ -15,15 +16,15 @@ type Story = StoryObj<typeof NumericInput>
 export const Default: Story = {
   args: {
     initialValue: 0,
-    onSave: (v: number) => console.log('saved', v),
-    onCancel: () => console.log('cancelled'),
+    onSave: fn(),
+    onCancel: fn(),
   },
 }
 
 export const WithValue: Story = {
   args: {
     initialValue: 8,
-    onSave: (v: number) => console.log('saved', v),
-    onCancel: () => console.log('cancelled'),
+    onSave: fn(),
+    onCancel: fn(),
   },
 }
