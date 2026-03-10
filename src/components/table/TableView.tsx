@@ -20,6 +20,7 @@ import { useWindowSize } from 'usehooks-ts'
 import { api } from '~/../convex/_generated/api'
 import { useSyncedState } from '~/hooks/useSyncedState'
 
+import { Button } from '../ui/Button'
 import { HabitRow } from './HabitRow'
 import { TableHeader } from './TableHeader'
 
@@ -146,12 +147,9 @@ export function TableView({ dayCount: initialDayCount = 7 }: TableViewProps) {
     return (
       <div className="flex-1 flex items-center justify-center bg-bg text-text-secondary flex-col">
         <div className="text-center font-mono text-sm mb-4">No habits yet.</div>
-        <Link
-          to="/habits/new"
-          className="text-sm font-sans text-text-secondary hover:text-text-primary transition-colors inline-block hover:bg-bg-subtle px-2 py-1"
-        >
-          + new habit
-        </Link>
+        <Button asChild variant="ghost" size="sm">
+          <Link to="/habits/new">+ new habit</Link>
+        </Button>
       </div>
     )
   }
@@ -202,12 +200,9 @@ export function TableView({ dayCount: initialDayCount = 7 }: TableViewProps) {
         </DndContext>
 
         <div className="pt-2 pb-4 px-2">
-          <Link
-            to="/habits/new"
-            className="text-sm font-sans text-text-secondary hover:text-text-primary transition-colors inline-block hover:bg-bg-subtle px-2 py-1"
-          >
-            + new habit
-          </Link>
+          <Button asChild variant="ghost" size="sm">
+            <Link to="/habits/new">+ new habit</Link>
+          </Button>
         </div>
       </div>
     </div>
