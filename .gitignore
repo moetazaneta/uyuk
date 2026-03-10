@@ -32,3 +32,9 @@ test-results/
 # misc
 *.log
 *.tsbuildinfo
+
+# screenshots & qa
+screenshots/
+
+# ai agent state
+.sisyphus/
