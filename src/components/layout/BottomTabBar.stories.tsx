@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
+
 import { RouterDecorator } from '../../../.storybook/preview'
 import { BottomTabBar } from './BottomTabBar'
 

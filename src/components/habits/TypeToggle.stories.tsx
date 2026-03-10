@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
+
 import { TypeToggle } from './TypeToggle'
 
 const meta: Meta<typeof TypeToggle> = {
@@ -13,7 +14,9 @@ export default meta
 type Story = StoryObj<typeof TypeToggle>
 
 function Controlled(props: { initial?: 'boolean' | 'numeric' }) {
-  const [value, setValue] = useState<'boolean' | 'numeric'>(props.initial ?? 'boolean')
+  const [value, setValue] = useState<'boolean' | 'numeric'>(
+    props.initial ?? 'boolean',
+  )
   return (
     <div className="w-64">
       <TypeToggle value={value} onChange={setValue} />

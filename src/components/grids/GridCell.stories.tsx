@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
+
 import { GridCell } from './GridCell'
 
 const meta: Meta<typeof GridCell> = {

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
+
 import { IconPicker } from './IconPicker'
 import type { IconPickerProps } from './IconPicker'
 

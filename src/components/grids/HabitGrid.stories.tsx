@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
+
 import type { CellData } from './HabitGrid'
 import { HabitGrid } from './HabitGrid'
 

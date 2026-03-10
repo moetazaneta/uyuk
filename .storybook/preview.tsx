@@ -7,15 +7,28 @@ import {
   createRoute,
 } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
+
 import '../src/styles/app.css'
 
 // Minimal router so components using useRouterState / Link don't crash
 const rootRoute = createRootRoute({ component: () => null })
 const indexRoute = createRoute({ getParentRoute: () => rootRoute, path: '/' })
-const tableRoute = createRoute({ getParentRoute: () => rootRoute, path: '/table' })
-const gridsRoute = createRoute({ getParentRoute: () => rootRoute, path: '/grids' })
-const settingsRoute = createRoute({ getParentRoute: () => rootRoute, path: '/settings' })
-const habitNewRoute = createRoute({ getParentRoute: () => rootRoute, path: '/habits/new' })
+const tableRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/table',
+})
+const gridsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/grids',
+})
+const settingsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/settings',
+})
+const habitNewRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/habits/new',
+})
 
 const routeTree = rootRoute.addChildren([
   indexRoute,

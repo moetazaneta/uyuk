@@ -1,8 +1,8 @@
-import tailwindcss from '@tailwindcss/vite'
 import type { StorybookConfig } from '@storybook/react-vite'
+import tailwindcss from '@tailwindcss/vite'
 import Icons from 'unplugin-icons/vite'
-import tsconfigPaths from 'vite-tsconfig-paths'
 import { mergeConfig } from 'vite'
+import tsconfigPaths from 'vite-tsconfig-paths'
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.stories.@(ts|tsx|mdx)'],

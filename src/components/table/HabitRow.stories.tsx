@@ -1,7 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import { fn } from 'storybook/test'
 import { DndContext } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
+import type { Meta, StoryObj } from '@storybook/react'
+import { fn } from 'storybook/test'
+
 import type { Doc } from '../../../convex/_generated/dataModel'
 import { HabitRow } from './HabitRow'
 
@@ -18,7 +19,10 @@ const meta: Meta<typeof HabitRow> = {
   decorators: [
     (Story) => (
       <DndContext>
-        <SortableContext items={['habit1']} strategy={verticalListSortingStrategy}>
+        <SortableContext
+          items={['habit1']}
+          strategy={verticalListSortingStrategy}
+        >
           <Story />
         </SortableContext>
       </DndContext>
@@ -81,9 +85,18 @@ export const WithStats: Story = {
 
 export const BooleanHabit: Story = {
   args: {
-    habit: { ...mockHabit, name: 'Exercise', iconValue: '💪', type: 'boolean', target: 1, color: '#22c55e' },
+    habit: {
+      ...mockHabit,
+      name: 'Exercise',
+      iconValue: '💪',
+      type: 'boolean',
+      target: 1,
+      color: '#22c55e',
+    },
     dates,
-    completionsByDate: Object.fromEntries(dates.map((d, i) => [d.dateStr, i % 2 === 0 ? 1 : 0])),
+    completionsByDate: Object.fromEntries(
+      dates.map((d, i) => [d.dateStr, i % 2 === 0 ? 1 : 0]),
+    ),
     showStats: false,
     onUpdateCompletion: fn(),
   },

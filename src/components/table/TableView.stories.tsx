@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { fn } from 'storybook/test'
+
 import { RouterDecorator } from '../../../.storybook/preview'
 import { TableView } from './TableView'
 
@@ -109,10 +110,12 @@ export const WithStats: Story = {
     vi.mock('convex/react', () => ({
       useQuery: (query: unknown) => {
         const key = String(query)
-        if (key.includes('settings')) return { ...mockSettings, showStatsInTable: true }
+        if (key.includes('settings'))
+          return { ...mockSettings, showStatsInTable: true }
         if (key.includes('habits.list')) return mockHabits
         if (key.includes('completions')) return mockCompletions
-        if (key.includes('stats')) return { currentStreak: 3, completionRate: 71 }
+        if (key.includes('stats'))
+          return { currentStreak: 3, completionRate: 71 }
         return undefined
       },
       useMutation: () => fn(),
