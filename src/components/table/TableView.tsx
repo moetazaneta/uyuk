@@ -48,7 +48,9 @@ export function TableView({ dayCount: initialDayCount = 7 }: TableViewProps) {
 
   // Local ordered state avoids dnd-kit snap-back teleport: we own the order,
   // and only sync from server when it changes externally.
-  const [orderedHabits, setOrderedHabits] = useState<NonNullable<typeof habits>>(habits ?? [])
+  const [orderedHabits, setOrderedHabits] = useState<
+    NonNullable<typeof habits>
+  >(habits ?? [])
 
   useEffect(() => {
     if (habits !== undefined) setOrderedHabits(habits)
@@ -140,15 +142,15 @@ export function TableView({ dayCount: initialDayCount = 7 }: TableViewProps) {
 
   if (habits === undefined && orderedHabits.length === 0) {
     return (
-      <div className="flex-1 overflow-auto bg-bg p-4 md:p-6" data-testid="table-loading">
+      <div
+        className="flex-1 overflow-auto bg-bg p-4 md:p-6"
+        data-testid="table-loading"
+      >
         <TableHeader dates={dates} />
         <div className="flex flex-col">
-           {[1, 2, 3].map((i) => (
-             <div
-               key={i}
-               className="h-10 animate-pulse bg-bg-subtle"
-             />
-           ))}
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="h-10 animate-pulse bg-bg-subtle" />
+          ))}
         </div>
       </div>
     )
@@ -169,7 +171,10 @@ export function TableView({ dayCount: initialDayCount = 7 }: TableViewProps) {
   }
 
   return (
-    <div className="flex-1 overflow-auto bg-bg p-4 md:p-6" data-testid="table-view">
+    <div
+      className="flex-1 overflow-auto bg-bg p-4 md:p-6"
+      data-testid="table-view"
+    >
       <div className="min-w-max">
         <TableHeader
           dates={dates}
