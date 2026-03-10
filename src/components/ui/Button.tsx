@@ -12,7 +12,7 @@ const buttonVariants = cva(
         default:
           'bg-[#ededed] text-[#0a0a0a] hover:bg-[#d4d4d4] active:bg-[#c4c4c4]',
         secondary:
-          'bg-bg-subtle text-text-primary hover:bg-bg-elevated active:opacity-75',
+          'bg-bg-subtle text-text-secondary hover:bg-bg-elevated hover:text-text-primary active:opacity-75',
         ghost:
           'text-text-secondary hover:text-text-primary hover:bg-bg-subtle active:opacity-75',
         destructive:
@@ -24,8 +24,8 @@ const buttonVariants = cva(
         sm: 'h-8 px-4 text-xs',
         lg: 'h-12 px-8 text-base',
         icon: 'h-10 w-10',
-        'icon-sm': 'h-8 w-8',
-        'icon-lg': 'h-12 w-12',
+        'icon-sm': 'h-8 w-8 [&_svg]:size-3',
+        'icon-lg': 'h-12 w-12 [&_svg]:size-6',
       },
     },
     defaultVariants: {

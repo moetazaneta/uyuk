@@ -1,4 +1,5 @@
 export interface TableHeaderProps {
+  children?: React.ReactNode
   dates: {
     dateStr: string
     label: string
@@ -8,9 +9,14 @@ export interface TableHeaderProps {
   showStats?: boolean
 }
 
-export function TableHeader({ dates, showStats = false }: TableHeaderProps) {
+export function TableHeader({
+  children,
+  dates,
+  showStats = false,
+}: TableHeaderProps) {
   return (
     <div className="flex items-center h-12 border-b border-divider sticky top-0 bg-bg z-10">
+      {children}
       {/* Spacer for drag handle(24) + icon(24+mr8) + name + flex-1 */}
       {/* Just use flex-1 to push the dates to the right, matching HabitRow */}
       <div className="flex-1" />

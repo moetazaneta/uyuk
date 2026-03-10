@@ -16,6 +16,7 @@ import { Link } from '@tanstack/react-router'
 import { useMutation, useQuery } from 'convex/react'
 import { useMemo } from 'react'
 import { useWindowSize } from 'usehooks-ts'
+import PhPlus from '~icons/ph/plus'
 
 import { api } from '~/../convex/_generated/api'
 import { useSyncedState } from '~/hooks/useSyncedState'
@@ -147,8 +148,16 @@ export function TableView({ dayCount: initialDayCount = 7 }: TableViewProps) {
     return (
       <div className="flex-1 flex items-center justify-center bg-bg text-text-secondary flex-col">
         <div className="text-center font-mono text-sm mb-4">No habits yet.</div>
-        <Button asChild variant="ghost" size="sm">
-          <Link to="/habits/new">+ new habit</Link>
+        <Button
+          asChild
+          variant="secondary"
+          size="sm"
+          className="hidden md:inline-flex"
+        >
+          <Link to="/habits/new">
+            <PhPlus />
+            new habit
+          </Link>
         </Button>
       </div>
     )
@@ -163,7 +172,19 @@ export function TableView({ dayCount: initialDayCount = 7 }: TableViewProps) {
         <TableHeader
           dates={dates}
           showStats={settings?.showStatsInTable ?? false}
-        />
+        >
+          <Button
+            asChild
+            variant="secondary"
+            size="sm"
+            className="hidden md:inline-flex"
+          >
+            <Link to="/habits/new">
+              <PhPlus />
+              new habit
+            </Link>
+          </Button>
+        </TableHeader>
 
         <DndContext
           sensors={sensors}
@@ -198,13 +219,19 @@ export function TableView({ dayCount: initialDayCount = 7 }: TableViewProps) {
             </div>
           </SortableContext>
         </DndContext>
-
-        <div className="pt-2 pb-4 px-2">
-          <Button asChild variant="ghost" size="sm">
-            <Link to="/habits/new">+ new habit</Link>
-          </Button>
-        </div>
       </div>
+
+      <Button
+        asChild
+        variant="secondary"
+        size="icon-lg"
+        className="fixed md:hidden right-4"
+        style={{ bottom: 'calc(56px + env(safe-area-inset-bottom) + 16px)' }}
+      >
+        <Link to="/habits/new" aria-label="New habit">
+          <PhPlus />
+        </Link>
+      </Button>
     </div>
   )
 }

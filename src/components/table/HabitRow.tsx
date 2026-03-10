@@ -60,9 +60,9 @@ export function HabitRow({
       {...attributes}
       {...listeners}
     >
-      <div className="text-text-disabled cursor-grab active:cursor-grabbing w-6 flex-shrink-0 items-center justify-center opacity-0 md:group-hover:opacity-100 transition-opacity hidden md:flex">
+      {/* <div className="text-text-disabled cursor-grab active:cursor-grabbing w-6 flex-shrink-0 items-center justify-center opacity-0 md:group-hover:opacity-100 transition-opacity hidden md:flex">
         ⠿
-      </div>
+      </div> */}
 
       <div className="w-5 flex-shrink-0 flex items-center justify-center text-sm mr-1">
         {icon}
