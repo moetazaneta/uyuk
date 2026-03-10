@@ -6,8 +6,8 @@
   --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Mono', monospace;
 
   /* Base Colors */
-  --color-bg: #0a0a0a;
-  --color-bg-elevated: #121212;
+  --color-bg: #000;
+  --color-bg-elevated: #111;
   --color-bg-subtle: #1a1a1a;
   --color-text-primary: #ededed;
   --color-text-secondary: #a1a1a1;
