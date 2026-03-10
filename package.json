@@ -16,6 +16,8 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
     "validate": "pnpm typecheck && pnpm lint && pnpm test"
   },
   "dependencies": {
@@ -44,6 +46,9 @@
     "@edge-runtime/vm": "^5.0.0",
     "@iconify-json/ph": "^1.2.2",
     "@playwright/test": "^1.58.2",
+    "@storybook/addon-a11y": "^10.2.17",
+    "@storybook/react": "^10.2.17",
+    "@storybook/react-vite": "^10.2.17",
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
     "@testing-library/jest-dom": "^6.9.1",
@@ -58,6 +63,7 @@
     "lefthook": "^2.1.1",
     "oxfmt": "^0.35.0",
     "oxlint": "^1.50.0",
+    "storybook": "^10.2.17",
     "typescript": "^5.9.3",
     "unplugin-icons": "^23.0.1",
     "vite": "^7.3.1",
