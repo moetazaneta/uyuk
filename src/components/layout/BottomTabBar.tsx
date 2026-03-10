@@ -1,11 +1,13 @@
 import { Link, useRouterState } from '@tanstack/react-router'
 
-import { GridsIcon, SettingsIcon, TableIcon } from './Icons'
+import PhGear from '~icons/ph/gear'
+import PhGridFour from '~icons/ph/grid-four'
+import PhTable from '~icons/ph/table'
 
 const navItems = [
-  { path: '/table', label: 'table', icon: TableIcon },
-  { path: '/grids', label: 'grids', icon: GridsIcon },
-  { path: '/settings', label: 'settings', icon: SettingsIcon },
+  { path: '/table', label: 'table', icon: PhTable },
+  { path: '/grids', label: 'grids', icon: PhGridFour },
+  { path: '/settings', label: 'settings', icon: PhGear },
 ]
 
 export function BottomTabBar() {

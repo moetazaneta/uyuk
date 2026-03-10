@@ -12,7 +12,8 @@
       "vite/client",
       "vitest/globals",
       "@testing-library/jest-dom",
-      "node"
+      "node",
+      "unplugin-icons/types/react"
     ],
     "strict": true,
     "noEmit": true,
