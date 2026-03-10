@@ -82,10 +82,12 @@ export function GridsView() {
         className="flex-1 overflow-auto bg-bg p-4 md:p-6"
         data-testid="grids-loading"
       >
-        <div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="border border-divider h-48 animate-pulse" />
-          ))}
+        <div className="grid grid-cols-1 min-[900px]:grid-cols-2 min-[1400px]:grid-cols-3 gap-4">
+          {/* 1 wide skeleton for All Habits */}
+          <div className="col-span-full min-[900px]:col-span-2 min-[1400px]:col-span-3 h-48 bg-bg-subtle animate-pulse" />
+          {/* 2 regular skeletons */}
+          <div className="h-48 bg-bg-subtle animate-pulse" />
+          <div className="h-48 bg-bg-subtle animate-pulse" />
         </div>
       </div>
     )
@@ -124,7 +126,7 @@ export function GridsView() {
       className="flex-1 overflow-auto bg-bg p-4 md:p-6"
       data-testid="grids-view"
     >
-      <div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4 pb-20">
+      <div className="grid grid-cols-1 min-[900px]:grid-cols-2 min-[1400px]:grid-cols-3 gap-4 pb-20">
         <HabitGrid
           name="All Habits"
           color="#ededed"
