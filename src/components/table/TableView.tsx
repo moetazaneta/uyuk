@@ -48,7 +48,7 @@ export function TableView({ dayCount: initialDayCount = 7 }: TableViewProps) {
 
   // Local ordered state avoids dnd-kit snap-back teleport: we own the order,
   // and only sync from server when it changes externally.
-  const [orderedHabits, setOrderedHabits] = useState<typeof habits>(undefined)
+  const [orderedHabits, setOrderedHabits] = useState<NonNullable<typeof habits>>(habits ?? [])
 
   useEffect(() => {
     if (habits !== undefined) setOrderedHabits(habits)
@@ -138,17 +138,17 @@ export function TableView({ dayCount: initialDayCount = 7 }: TableViewProps) {
     }
   }
 
-  if (orderedHabits === undefined) {
+  if (habits === undefined && orderedHabits.length === 0) {
     return (
       <div className="flex-1 overflow-auto bg-bg p-4 md:p-6" data-testid="table-loading">
         <TableHeader dates={dates} />
         <div className="flex flex-col">
-          {[1, 2, 3].map((i) => (
-            <div
-              key={i}
-              className="h-10 border border-divider animate-pulse"
-            />
-          ))}
+           {[1, 2, 3].map((i) => (
+             <div
+               key={i}
+               className="h-10 animate-pulse bg-bg-subtle"
+             />
+           ))}
         </div>
       </div>
     )
@@ -160,7 +160,7 @@ export function TableView({ dayCount: initialDayCount = 7 }: TableViewProps) {
         <div className="text-center font-mono text-sm mb-4">No habits yet.</div>
         <Link
           to="/habits/new"
-          className="text-sm font-sans text-text-secondary hover:text-text-primary transition-colors border border-divider px-4 py-2"
+          className="text-sm font-sans text-text-secondary hover:text-text-primary transition-colors inline-block hover:bg-bg-subtle px-2 py-1"
         >
           + new habit
         </Link>
@@ -213,7 +213,7 @@ export function TableView({ dayCount: initialDayCount = 7 }: TableViewProps) {
         <div className="pt-2 pb-4 px-2">
           <Link
             to="/habits/new"
-            className="text-sm font-sans text-text-secondary hover:text-text-primary transition-colors inline-block"
+            className="text-sm font-sans text-text-secondary hover:text-text-primary transition-colors inline-block hover:bg-bg-subtle px-2 py-1"
           >
             + new habit
           </Link>

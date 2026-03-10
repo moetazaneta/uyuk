@@ -117,4 +117,21 @@ describe('GridsView', () => {
 
     expect(first7).toEqual(['S', 'M', 'T', 'W', 'T', 'F', 'S'])
   })
+
+  it('configures All Habits for 14/28/42 columns by breakpoints', () => {
+    mockHabits = [{ _id: 'h1', name: 'Run', color: '#0f0', target: 1 }]
+
+    const { container } = render(<GridsView />)
+    let allHabitsGrid = container.querySelector('.grid-flow-col') as HTMLElement
+
+    expect(allHabitsGrid.className).toContain(
+      'grid-cols-[auto_repeat(14,minmax(0,1fr))]',
+    )
+    expect(allHabitsGrid.className).toContain(
+      'min-[900px]:grid-cols-[auto_repeat(28,minmax(0,1fr))]',
+    )
+    expect(allHabitsGrid.className).toContain(
+      'min-[1400px]:grid-cols-[auto_repeat(42,minmax(0,1fr))]',
+    )
+  })
 })
