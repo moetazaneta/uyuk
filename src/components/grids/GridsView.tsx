@@ -132,7 +132,9 @@ export function GridsView() {
           color="#ededed"
           cells={allHabitsCells}
           stats={null}
-          weekStart={(settings?.weekStartDay as 'monday' | 'sunday') ?? 'monday'}
+          weekStart={
+            (settings?.weekStartDay as 'monday' | 'sunday') ?? 'monday'
+          }
           isAllHabits={true}
         />
         {habits.map((habit) => {

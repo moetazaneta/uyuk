@@ -1,3 +1,5 @@
+/// <reference types="vite/client" />
+
 import type { QueryClient } from '@tanstack/react-query'
 import {
   Outlet,
@@ -5,7 +7,6 @@ import {
   Scripts,
   createRootRouteWithContext,
 } from '@tanstack/react-router'
-/// <reference types="vite/client" />
 import type { ReactNode } from 'react'
 
 import appCss from '~/styles/app.css?url'

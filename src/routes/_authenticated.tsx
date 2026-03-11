@@ -1,7 +1,7 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 import { useNavigate } from '@tanstack/react-router'
 import { useConvexAuth } from 'convex/react'
-import { useEffect } from 'react'
+import { Suspense, useEffect } from 'react'
 
 import { AppShell } from '../components/layout/AppShell'
 
@@ -28,12 +28,20 @@ export function AuthenticatedLayout() {
   }
 
   if (!isAuthenticated) {
-    return null
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-black">
+        <span className="font-mono text-sm text-zinc-500">
+          not authenticated
+        </span>
+      </div>
+    )
   }
 
   return (
     <AppShell>
-      <Outlet />
+      <Suspense fallback={<div>suspensing...</div>}>
+        <Outlet />
+      </Suspense>
     </AppShell>
   )
 }

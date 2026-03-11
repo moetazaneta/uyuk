@@ -1,3 +1,4 @@
+import { convexQuery } from '@convex-dev/react-query'
 import {
   closestCenter,
   DndContext,
@@ -12,6 +13,7 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { useMutation, useQuery } from 'convex/react'
 import { useMemo } from 'react'
@@ -45,8 +47,8 @@ export interface TableViewProps {
 }
 
 export function TableView({ dayCount: initialDayCount = 7 }: TableViewProps) {
-  const settings = useQuery(api.users.settings)
-  const habits = useQuery(api.habits.list)
+  const { data: settings } = useSuspenseQuery(convexQuery(api.users.settings))
+  const { data: habits } = useSuspenseQuery(convexQuery(api.habits.list))
   const upsertCompletion = useMutation(api.completions.upsert)
   const reorder = useMutation(api.habits.reorder)
 
@@ -144,7 +146,7 @@ export function TableView({ dayCount: initialDayCount = 7 }: TableViewProps) {
     )
   }
 
-  if (!orderedHabits || orderedHabits.length === 0) {
+  if (habits !== undefined && orderedHabits.length === 0) {
     return (
       <div className="flex-1 flex items-center justify-center bg-bg text-text-secondary flex-col">
         <div className="text-center font-mono text-sm mb-4">No habits yet.</div>
