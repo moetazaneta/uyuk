@@ -1,8 +1,6 @@
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { useQuery } from 'convex/react'
 
-import { api } from '~/../convex/_generated/api'
 import type { Doc } from '~/../convex/_generated/dataModel'
 
 import { DayCell } from './DayCell'
@@ -19,10 +17,15 @@ export function HabitRow({
   habit,
   dates,
   completionsByDate,
-  showStats = false,
+  // showStats = false,
   onUpdateCompletion,
 }: HabitRowProps) {
-  const stats = useQuery(api.stats.forHabit, { habitId: habit._id })
+  // const { data: stats } = useSuspenseQuery(
+  //   convexQuery(api.stats.forHabit, { habitId: habit._id }),
+  // )
+  // console.log('stats', stats)
+
+  // const stats = useQuery(api.stats.forHabit, { habitId: habit._id })
 
   const {
     attributes,
@@ -48,9 +51,9 @@ export function HabitRow({
       </svg>
     )
 
-  const statsDisplay = stats
-    ? `${stats.currentStreak}🔥 ${Math.round(stats.completionRate)}%`
-    : '...'
+  // const statsDisplay = stats
+  //   ? `${stats.currentStreak}🔥 ${Math.round(stats.completionRate)}%`
+  //   : '...'
 
   return (
     <div
@@ -79,7 +82,11 @@ export function HabitRow({
           const value = completionsByDate[dateStr] ?? 0
 
           return (
-            <div key={dateStr} onPointerDown={(e) => e.stopPropagation()}>
+            <div
+              key={dateStr}
+              onPointerDown={(e) => e.stopPropagation()}
+              className="bg-red-500"
+            >
               <DayCell
                 date={dateStr}
                 isToday={isToday}
@@ -95,11 +102,11 @@ export function HabitRow({
         })}
       </div>
 
-      {showStats && (
+      {/* {showStats && (
         <div className="w-[80px] ml-4 text-right font-mono text-xs text-text-secondary flex-shrink-0">
           {statsDisplay}
         </div>
-      )}
+      )} */}
     </div>
   )
 }

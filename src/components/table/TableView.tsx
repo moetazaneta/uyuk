@@ -15,7 +15,7 @@ import {
 } from '@dnd-kit/sortable'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
-import { useMutation, useQuery } from 'convex/react'
+import { useMutation } from 'convex/react'
 import { useMemo } from 'react'
 import { useWindowSize } from 'usehooks-ts'
 import PhPlus from '~icons/ph/plus'
@@ -85,9 +85,11 @@ export function TableView({ dayCount: initialDayCount = 7 }: TableViewProps) {
   const startDate = dates[0]?.dateStr ?? ''
   const endDate = dates[dates.length - 1]?.dateStr ?? ''
 
-  const completions = useQuery(
-    api.completions.byDateRange,
-    startDate && endDate ? { startDate, endDate } : 'skip',
+  const { data: completions } = useSuspenseQuery(
+    convexQuery(
+      api.completions.byDateRange,
+      startDate && endDate ? { startDate, endDate } : 'skip',
+    ),
   )
 
   const completionsMap = useMemo(() => {
@@ -161,6 +163,18 @@ export function TableView({ dayCount: initialDayCount = 7 }: TableViewProps) {
             new habit
           </Link>
         </Button>
+
+        <Button
+          asChild
+          variant="secondary"
+          size="icon-lg"
+          className="fixed md:hidden right-4"
+          style={{ bottom: 'calc(56px + env(safe-area-inset-bottom) + 16px)' }}
+        >
+          <Link to="/habits/new" aria-label="New habit">
+            <PhPlus />
+          </Link>
+        </Button>
       </div>
     )
   }
@@ -207,7 +221,6 @@ export function TableView({ dayCount: initialDayCount = 7 }: TableViewProps) {
                     habit={habit}
                     dates={dates}
                     completionsByDate={habitCompletions}
-                    showStats={settings?.showStatsInTable ?? false}
                     onUpdateCompletion={async (dateStr, value) => {
                       await upsertCompletion({
                         habitId: habit._id,
